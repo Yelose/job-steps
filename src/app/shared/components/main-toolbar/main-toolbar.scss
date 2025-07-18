@@ -1,0 +1,12 @@
+mat-toolbar {
+    justify-content: space-between;
+
+    h1 {
+        cursor: pointer;
+    }
+
+    menu {
+        display: flex;
+        align-items: center;
+    }
+}
