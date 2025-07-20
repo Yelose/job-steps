@@ -1,10 +1,13 @@
 <mat-toolbar>
-    <h1 routerLink="">Job Steps</h1>
+  <h1 routerLink="">Job Steps</h1>
 
-    <menu>
-        <button mat-icon-button routerLink="">
-            <mat-icon aria-hidden="false" aria-label="home icon" fontIcon="home"></mat-icon>
-        </button>
-        <button matButton routerLink="login">Login</button>
-    </menu>
+  <menu>
+    <button mat-icon-button (click)="toggleDrawer()">
+      <mat-icon
+        aria-hidden="false"
+        aria-label="open menu"
+        fontIcon="menu"
+      ></mat-icon>
+    </button>
+  </menu>
 </mat-toolbar>

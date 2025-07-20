@@ -16,6 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(withEventReplay()),
     provideFirebaseApp(() => initializeApp(
       firebaseCredentials)),
-    provideAuth(() => getAuth()), provideFirestore(() => getFirestore())
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore())
   ]
 };

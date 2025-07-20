@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { DrawerService } from '../../../core/services/drawer-service';
 
 @Component({
   selector: 'app-main-toolbar',
@@ -11,5 +12,8 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './main-toolbar.scss'
 })
 export class MainToolbar {
-
+  private drawerService = inject(DrawerService)
+  toggleDrawer(): void {
+    this.drawerService.toggle()
+  }
 }

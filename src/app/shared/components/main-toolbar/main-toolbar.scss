@@ -1,12 +1,24 @@
+@use "@angular/material" as mat;
+
 mat-toolbar {
-    justify-content: space-between;
+  justify-content: space-between;
+  @include mat.toolbar-overrides(
+    (
+      container-background-color: var(--mat-sys-primary),
+      container-text-color: var(--mat-sys-on-primary),
+    )
+  );
+  @include mat.icon-overrides(
+    (
+      color: var(--mat-sys-on-primary),
+    )
+  );
+  h1 {
+    cursor: pointer;
+  }
 
-    h1 {
-        cursor: pointer;
-    }
-
-    menu {
-        display: flex;
-        align-items: center;
-    }
+  menu {
+    display: flex;
+    align-items: center;
+  }
 }
