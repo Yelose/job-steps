@@ -4,12 +4,7 @@
 <main>
   <section>
     <mat-drawer-container>
-      <mat-drawer
-        #drawer
-        mode="side"
-        [opened]="drawerOpen()"
-        (click)="closeDrawer()"
-      >
+      <mat-drawer #drawer mode="side" [opened]="drawerOpen()" (click)="closeDrawer()">
         <mat-nav-list>
           <h3 mat-subheader>Secciones</h3>
           <a mat-list-item routerLink="" routerLinkActive="active-link">
@@ -18,13 +13,13 @@
               <span>Inicio</span>
             </div>
           </a>
-          <a mat-list-item routerLink="dashboard" [disabled]="!loggedIn">
+          <a mat-list-item routerLink="dashboard" [disabled]="!loggedIn()">
             <div>
               <mat-icon>dashboard</mat-icon>
               <span>Panel de Control</span>
             </div>
           </a>
-          <a mat-list-item routerLink="stats" [disabled]="!loggedIn">
+          <a mat-list-item routerLink="stats" [disabled]="!loggedIn()">
             <div>
               <mat-icon>bar_chart</mat-icon>
               <span>Estadísticas</span>
@@ -34,13 +29,13 @@
           <mat-divider />
 
           <h3 mat-subheader>Candidaturas</h3>
-          <a mat-list-item routerLink="/offers" [disabled]="!loggedIn">
+          <a mat-list-item routerLink="/offers" [disabled]="!loggedIn()">
             <div>
               <mat-icon>assignment_ind</mat-icon>
               <span>Ofertas</span>
             </div>
           </a>
-          <a mat-list-item routerLink="/stages" [disabled]="!loggedIn">
+          <a mat-list-item routerLink="/stages" [disabled]="!loggedIn()">
             <div>
               <mat-icon>work_history</mat-icon>
               <span>Etapas</span>
@@ -50,7 +45,7 @@
           <mat-divider />
 
           <h3 mat-subheader>Mi perfil</h3>
-          <a mat-list-item routerLink="/profile" [disabled]="!loggedIn">
+          <a mat-list-item routerLink="/profile" [disabled]="!loggedIn()">
             <div>
               <mat-icon>person</mat-icon>
               <span>Perfil</span>
@@ -58,7 +53,7 @@
           </a>
 
           <mat-divider />
-          @if (!loggedIn) {
+          @if (!loggedIn()) {
           <a mat-list-item routerLink="/login">
             <div>
               <mat-icon>login</mat-icon>
@@ -72,7 +67,7 @@
             </div>
           </a>
 
-          } @if(loggedIn){
+          } @if(loggedIn()){
           <a mat-list-item (click)="logout()">
             <div>
               <mat-icon>logout</mat-icon>

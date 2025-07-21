@@ -7,17 +7,13 @@ html {
   @include mat.core(); // Required for component base styles
 
   // Apply Material theme using prebuilt palettes
-  @include mat.theme(
-    (
-      color: (
-        primary: mat.$azure-palette,
+  @include mat.theme((color: (primary: mat.$azure-palette,
         secondary: mat.$violet-palette,
         tertiary: mat.$cyan-palette,
       ),
       typography: Roboto,
       density: 0,
-    )
-  );
+    ));
 }
 
 // Default body background and text color using system tokens
@@ -60,4 +56,22 @@ body {
 
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.snackbar-success {
+  @include mat.snack-bar-overrides((container-color: rgb(86, 189, 38),
+      button-color: var(--mat-sys-primary),
+      supporting-text-color: var(--mat-sys-on-primary)));
+}
+
+.snackbar-error {
+  @include mat.snack-bar-overrides((container-color: var(--mat-sys-error),
+      button-color: var(--mat-sys-on-error),
+      supporting-text-color: var(--mat-sys-on-error)));
+}
+
+.snackbar-info {
+  @include mat.snack-bar-overrides((container-color: var(--mat-sys-secondary),
+      button-color: var(--mat-sys-on-secondary),
+      supporting-text-color: var(--mat-sys-on-secondary)));
 }
