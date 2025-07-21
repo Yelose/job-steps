@@ -1,1 +1,30 @@
-home component
+<header>
+    <h1>Organiza tu búsqueda de empleo y mejora tus oportunidades</h1>
+    <h2>Lleva el control de tus candidaturas, etapas de selección, respuestas y rechazos. Descubre tus patrones y toma
+        mejores decisiones.</h2>
+</header>
+
+<main>
+    @for(card of utilities; track card){
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title> {{card.title}} </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <mat-icon>{{card.icon}}</mat-icon>
+            <p>{{card.sub1}}</p>
+            <p>{{card.sub2}}</p>
+        </mat-card-content>
+    </mat-card>
+    }
+
+</main>
+<footer>
+    <div>
+        <button mat-raised-button routerLink="register">Registrarse</button>
+        <button mat-stroked-button routerLink="login">Iniciar sesión</button>
+    </div>
+    <cite>
+        Empieza gratis. Tu búsqueda de empleo merece una herramienta a la altura.
+    </cite>
+</footer>

@@ -1,5 +1,7 @@
 @use "@angular/material" as mat;
 
+$font-size: clamp(15px, 2vw, 20px);
+
 // Define the theme using a color palette map
 html {
   color-scheme: light;
@@ -23,6 +25,16 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   margin: 0;
   padding: 0;
+  font-size: $font-size;
+}
+
+h1 {
+  font-size: calc($font-size * 1.5);
+}
+
+h2 {
+  font-size: calc($font-size * 1.2);
+  font-weight: 200;
 }
 
 // Optional toolbar style using system tokens
@@ -74,4 +86,16 @@ body {
   @include mat.snack-bar-overrides((container-color: var(--mat-sys-secondary),
       button-color: var(--mat-sys-on-secondary),
       supporting-text-color: var(--mat-sys-on-secondary)));
+}
+
+mat-card {
+  overflow: hidden;
+
+  @include mat.card-overrides((elevated-container-color: var(--mat-sys-tertiary),
+      elevated-container-elevation: var(--mat-sys-level3),
+      title-text-font: var(--mat-sys-on-tertiary)));
+
+  mat-card-header {
+    color: var(--mat-sys-on-tertiary);
+  }
 }

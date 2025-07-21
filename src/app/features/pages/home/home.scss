@@ -1,0 +1,70 @@
+@use "@angular/material" as mat;
+
+:host {
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    gap: 2dvh;
+    padding: 3dvh 3dvw;
+
+}
+
+main {
+    display: flex;
+    gap: 2dvw;
+    padding: 2dvh 3dvw;
+    flex-wrap: wrap;
+
+    mat-card {
+        display: flex;
+        flex-direction: column;
+        min-width: 280px;
+        flex: 1;
+
+        mat-card-header {
+            display: flex;
+            justify-content: center;
+            height: fit-content;
+            padding-bottom: 15px;
+        }
+
+        mat-card-content {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            background-color: white;
+
+            mat-icon {
+                @include mat.icon-overrides((color: var(--mat-sys-primary),
+                    ));
+                width: 100%;
+                height: fit-content;
+                font-size: 46px;
+                padding: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+    }
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+
+    div {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+
+    }
+}

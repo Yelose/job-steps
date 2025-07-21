@@ -14,7 +14,7 @@ export class AuthService {
   readonly isLoggedIn = computed(() => !!this.userSignal())
 
   get user(): User | null {
-    return this.userSignal();
+    return this.userSignal()
   }
 
   login(email: string, password: string) {
