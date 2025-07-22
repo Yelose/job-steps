@@ -17,7 +17,13 @@ export const routes: Routes = [
         path: "not-found", loadComponent: () => import("./features/pages/not-found/not-found").then(m => m.NotFound)
     },
     {
+        path: "offers", loadComponent: () => import("./features/pages/offers/offers").then(m => m.Offers)
+    },
+    {
+        path: "new-offer", loadComponent: () => import("./features/pages/offers/new-offer/new-offer").then(m => m.NewOffer)
+    },
+    {
         path: "**", redirectTo: "not-found"
-    }
+    },
 
 ];
