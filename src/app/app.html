@@ -3,8 +3,8 @@
 </header>
 <main>
   <section>
-    <mat-drawer-container>
-      <mat-drawer #drawer mode="side" [opened]="drawerOpen()" (click)="closeDrawer()">
+    <mat-sidenav-container>
+      <mat-sidenav #drawer fixedInViewport mode="side" [opened]="drawerOpen()" (click)="closeDrawer()">
         <mat-nav-list>
           <h3 mat-subheader>Secciones</h3>
           <a mat-list-item routerLink="" routerLinkActive="active-link">
@@ -76,10 +76,12 @@
           </a>
           }
         </mat-nav-list>
-      </mat-drawer>
+      </mat-sidenav>
+      <mat-sidenav-content>
 
-      <router-outlet />
-    </mat-drawer-container>
+        <router-outlet />
+      </mat-sidenav-content>
+    </mat-sidenav-container>
   </section>
   <footer>
     <app-footer />

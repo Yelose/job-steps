@@ -79,34 +79,55 @@
         </header>
 
         <main>
-            <!-- Input + botón -->
+            <!-- Input + botón de añadir etapa -->
             <div>
                 <mat-form-field appearance="outline">
                     <mat-label>Nueva etapa</mat-label>
-                    <input matInput formControlName="newStageName" />
+                    <input matInput formControlName="newStageName" (keydown.enter)="addStage()" />
                 </mat-form-field>
 
-                <button mat-raised-button type="button" [disabled]="!newStageName?.valid" (click)="addStage()">
+                <button matButton="filled" type="button" [disabled]="!newStageName?.valid" (click)="addStage()">
                     Añadir etapa
                 </button>
             </div>
 
             <!-- Lista de etapas -->
             <ng-container formArrayName="selectionStages">
-                @for (stage of selectionStages.controls; track stage; let i = $index) {
+                @for (stage of stagesSignal(); track stage; let i = $index) {
                 <div [formGroupName]="i">
-                    <mat-checkbox formControlName="completed">
-                        Etapa completada
-                    </mat-checkbox>
+                    <mat-checkbox formControlName="completed">Etapa completada</mat-checkbox>
                     <span>{{ stage.value.name }}</span>
-
-
-                    <button mat-icon-button color="warn" type="button" (click)="removeStage(i)">
+                    <button mat-icon-button type="button" (click)="removeStage(i)">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </div>
                 }
             </ng-container>
+
+        </main>
+    </section>
+    <section>
+        <header>
+            <h2>Objetivo personal con esta empresa</h2>
+        </header>
+        <main>
+            <mat-form-field appearance="outline" class="full">
+                <mat-label>Reflexión personal sobre la empresa</mat-label>
+                <textarea matInput rows="5" formControlName="personalObjective"
+                    placeholder="¿por qué te interesa la empresa? ¿qué esperas obtener de este puesto?">
+                </textarea>
+                <mat-hint>Describe tus motivaciones personales para trabajar en esta empresa.</mat-hint>
+            </mat-form-field>
+        </main>
+    </section>
+    <section class="submit-container">
+        <header>
+            <h2> Enviar formulario </h2>
+        </header>
+        <main class="submit-buttons-container">
+            <button matButton="filled" type="submit">Guardar Oferta</button>
+            <button matButton="tonal" routerLink="/offers">Volver a ofertas</button>
+            <button matButton="filled" type="button" class="delete" (click)="resetForm()">Borrar formulario</button>
         </main>
     </section>
 </form>

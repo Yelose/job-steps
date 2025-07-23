@@ -1,28 +1,34 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormArray, FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { computed, signal, effect } from '@angular/core';
+import { computed, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog-service';
 
 
 @Component({
   selector: 'app-new-offer',
   imports: [MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule,
-    ReactiveFormsModule, MatDatepickerModule, MatCheckboxModule, MatSlideToggleModule],
-  providers: [provideNativeDateAdapter()],
+    ReactiveFormsModule, MatDatepickerModule, MatCheckboxModule, MatSlideToggleModule, RouterLink],
+  providers: [provideNativeDateAdapter(),
+  { provide: MAT_DATE_LOCALE, useValue: 'es-ES' } // importante para que la fecha aparezca DD/MM/AAAA
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './new-offer.html',
   styleUrl: './new-offer.scss'
 })
 export class NewOffer {
   fb = inject(NonNullableFormBuilder)
+  private confirmDialog = inject(ConfirmDialogService)
   private formArrayVersion = signal(0); // para forzar reevaluación
+  private cdr = inject(ChangeDetectorRef); //forzar detección de cambios en el Dom
 
   offerForm = this.fb.group({
     title: new FormControl('', { validators: [Validators.required] }),
@@ -38,8 +44,13 @@ export class NewOffer {
     contractType: new FormControl(''),
     salary: new FormControl(''),
     selectionStages: this.fb.array<FormGroup>([]),
-    newStageName: new FormControl('', Validators.required)
+    newStageName: new FormControl('', Validators.required),
+    personalObjective: new FormControl("")
   });
+
+  readonly stagesSignal = signal<FormGroup[]>([]);
+
+
 
   readonly canAddStage = computed(() => {
     this.formArrayVersion(); // reactiva el computed
@@ -98,6 +109,12 @@ export class NewOffer {
   get newStageName() {
     return this.offerForm.get("newStageName") as FormControl
   }
+
+  get personalObjective() {
+    return this.offerForm.get("personalObjective") as FormControl
+  }
+
+
   addStage() {
     const name = this.newStageName.value.trim();
     if (!name) return;
@@ -108,11 +125,30 @@ export class NewOffer {
     });
 
     this.selectionStages.push(stage);
-    this.newStageName.reset(); // limpia input tras añadir
+    this.newStageName.reset();
+    this.stagesSignal.set([...this.selectionStages.controls]); // ← Actualiza la señal
   }
+
   removeStage(index: number) {
-    this.selectionStages.removeAt(index);
-    this.formArrayVersion.update((v) => v + 1);
+    this.confirmDialog.confirm('¿Seguro que deseas eliminar esta etapa?').subscribe((confirmed) => {
+      if (confirmed) {
+        this.selectionStages.removeAt(index);
+        this.stagesSignal.set([...this.selectionStages.controls]); // ← Actualiza la señal
+        this.cdr.markForCheck()
+      }
+    });
+  }
+  resetForm() {
+    this.confirmDialog.confirm('¿Seguro de que quieres reiniciar el formulario? Esta acción va a borrar todos los campos', 'Borrando formulario').subscribe(
+      (confirm) => {
+        if (confirm) {
+          this.stagesSignal.set([])
+          this.offerForm.reset()
+          this.cdr.markForCheck()
+          this.offerForm.clearValidators()
+        }
+      }
+    )
   }
 
   submit() {

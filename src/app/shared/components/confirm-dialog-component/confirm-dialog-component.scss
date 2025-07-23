@@ -1,0 +1,5 @@
+@use "@angular/material" as mat;
+
+.cancel {
+    @include mat.button-overrides((filled-container-color: var(--mat-sys-error)));
+}

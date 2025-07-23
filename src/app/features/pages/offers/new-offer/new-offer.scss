@@ -60,7 +60,27 @@ form {
 
             }
         }
+
+        &.submit-container {
+            box-shadow: none;
+        }
     }
 
 
+}
+
+
+
+.submit-buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 2vh;
+}
+
+
+.delete {
+    @include mat.icon-overrides((color: var(--mat-sys-error),
+        ));
+    @include mat.button-overrides((filled-container-color: var(--mat-sys-error)));
 }

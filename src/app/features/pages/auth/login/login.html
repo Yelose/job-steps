@@ -1,24 +1,24 @@
 <div>
-    <h1>Log in</h1>
+    <h1>Iniciar Sesión</h1>
     <form [formGroup]="loginForm" (ngSubmit)="submit()">
         <mat-form-field appearance="outline">
-            <mat-label>email adress</mat-label>
-            <input matInput placeholder="enter your e-mail" formControlName="email" />
+            <mat-label>Correo electrónico</mat-label>
+            <input matInput placeholder="tu email" formControlName="email" type="email" />
             @if (email?.errors?.['required']) {
-            <mat-error>Email is required</mat-error>
+            <mat-error>Campo obligatorio</mat-error>
             }
             @if (email?.errors?.['email']) {
-            <mat-error>Invalid email format</mat-error>
+            <mat-error>Formato de email incorrecto</mat-error>
             }
         </mat-form-field>
         <mat-form-field appearance="outline">
-            <mat-label>password</mat-label>
-            <input matInput placeholder="enter your password" formControlName="password" type="password" />
+            <mat-label>Contraseña</mat-label>
+            <input matInput placeholder="introduce tu contraseña" formControlName="password" type="password" />
             @if (password?.errors?.['required']) {
-            <mat-error>Password is required</mat-error>
+            <mat-error>Contraseña obligatoria</mat-error>
             }
         </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">Log in</button>
-        <span>I don't have an account, <a routerLink="/register">Sign Up</a></span>
+        <button matButton="filled" type="submit">Log in</button>
+        <span>No tengo cuenta, <a routerLink="/register">Registrarme</a></span>
     </form>
 </div>
