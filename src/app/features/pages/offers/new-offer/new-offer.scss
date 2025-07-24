@@ -77,10 +77,3 @@ form {
     gap: 20px;
     padding: 2vh;
 }
-
-
-.delete {
-    @include mat.icon-overrides((color: var(--mat-sys-error),
-        ));
-    @include mat.button-overrides((filled-container-color: var(--mat-sys-error)));
-}

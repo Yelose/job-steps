@@ -1,5 +1,6 @@
 export class JobContractTypeModel {
     static readonly OPTIONS = [
+        'Sin especificar',
         'Indefinido',
         'Temporal',
         'Por obra y servicio',

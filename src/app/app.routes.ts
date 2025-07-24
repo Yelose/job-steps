@@ -23,6 +23,9 @@ export const routes: Routes = [
         path: "new-offer", loadComponent: () => import("./features/pages/offers/new-offer/new-offer").then(m => m.NewOffer)
     },
     {
+        path: "profile", loadComponent: () => import("./features/pages/profile/profile").then(m => m.Profile)
+    },
+    {
         path: "**", redirectTo: "not-found"
     },
 

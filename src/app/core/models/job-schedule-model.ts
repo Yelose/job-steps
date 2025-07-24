@@ -1,5 +1,6 @@
 export class JobScheduleModel {
     static readonly OPTIONS = [
+        'Sin especificar',
         'Jornada completa',
         'Media jornada',
         'Turno de mañana',

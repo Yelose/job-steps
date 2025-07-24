@@ -7,7 +7,7 @@ export type SnackbarType = 'success' | 'error' | 'info';
 export class SnackbarService {
   private snackBar = inject(MatSnackBar);
 
-  show(message: string, type: SnackbarType = 'info', duration = 3000) {
+  show(message: string, type: SnackbarType = 'info', duration = 5000) {
     this.snackBar.open(message, 'Cerrar', {
       duration,
       panelClass: [`snackbar-${type}`],

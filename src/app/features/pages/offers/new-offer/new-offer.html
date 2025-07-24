@@ -60,17 +60,26 @@
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Jornada</mat-label>
-                <input matInput formControlName="schedule" />
+                <mat-select formControlName="schedule">
+                    @for (s of scheduleOptions; track s) {
+                    <mat-option [value]="s">{{ s }}</mat-option>
+                    }
+                </mat-select>
             </mat-form-field>
+
             <mat-form-field appearance="outline">
                 <mat-label>Contrato</mat-label>
-                <input matInput formControlName="contractType" />
+                <mat-select formControlName="contractType">
+                    @for (c of contractTypeOptions; track c) {
+                    <mat-option [value]="c">{{ c }}</mat-option>
+                    }
+                </mat-select>
             </mat-form-field>
+
             <mat-form-field appearance="outline">
                 <mat-label>Salario</mat-label>
                 <input matInput formControlName="salary" />
             </mat-form-field>
-
         </main>
     </section>
     <section class="stages">
@@ -86,7 +95,8 @@
                     <input matInput formControlName="newStageName" (keydown.enter)="addStage()" />
                 </mat-form-field>
 
-                <button matButton="filled" type="button" [disabled]="!newStageName?.valid" (click)="addStage()">
+                <button matButton="filled" type="button" [disabled]="!newStageName?.value.trim()?.length"
+                    (click)="addStage()">
                     Añadir etapa
                 </button>
             </div>

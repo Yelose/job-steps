@@ -40,6 +40,8 @@ export class AuthService {
   }
 
   logout() {
-    return from(this.auth.signOut())
+    return from(this.auth.signOut());
   }
+
+
 }

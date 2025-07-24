@@ -98,4 +98,14 @@ mat-card {
   mat-card-header {
     color: var(--mat-sys-on-tertiary);
   }
+
+  mat-card-content {
+    background-color: white;
+  }
+}
+
+.delete {
+  @include mat.icon-overrides((color: var(--mat-sys-error),
+    ));
+  @include mat.button-overrides((filled-container-color: var(--mat-sys-error)));
 }
