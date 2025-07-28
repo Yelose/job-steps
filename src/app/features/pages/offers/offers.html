@@ -34,6 +34,10 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell *matHeaderCellDef>Acciones</th>
             <td mat-cell *matCellDef="let offer">
+                <button mat-icon-button [routerLink]="['/edit-offer', offer.id]" matTooltip="Editar">
+                    <mat-icon>edit</mat-icon>
+                </button>
+
                 <button mat-icon-button (click)="delete(offer.id)">
                     <mat-icon class="delete">delete</mat-icon>
                 </button>
@@ -46,7 +50,10 @@
 
     </table>
 </main>
-<footer>
 
-    <button matButton="filled" routerLink="/new-offer">Nueva oferta de empleo</button>
+<footer>
+    <button matButton="filled" routerLink="/new-offer">
+        <mat-icon>add</mat-icon>
+        Añadir nueva oferta
+    </button>
 </footer>

@@ -9,10 +9,12 @@ import { RouterLink } from '@angular/router';
 import { ConfirmDialogService } from '../../../shared/services/confirm-dialog-service';
 import { SnackbarService } from '../../../shared/services/snackbar-service';
 import { DateConvertionService } from '../../../shared/utils/date-convertion-service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-offers',
-  imports: [CommonModule, RouterLink, MatTableModule, MatPaginatorModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, RouterLink, MatTableModule, MatPaginatorModule, MatIconModule,
+    MatButtonModule, MatTooltipModule],
   templateUrl: './offers.html',
   styleUrl: './offers.scss'
 })

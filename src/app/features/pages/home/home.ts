@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../../core/services/auth-service';
 @Component({
   selector: 'app-home',
   imports: [MatSidenavModule, MatListModule, MatButtonModule, MatCardModule, MatIconModule, RouterLink],
@@ -12,6 +13,10 @@ import { RouterLink } from '@angular/router';
   styleUrl: './home.scss'
 })
 export class Home {
+
+  authService = inject(AuthService)
+  readonly loggedIn = computed(() => !!this.authService.currentUser());
+
   public utilities = [{
     title: "Seguimiento de candidaturas",
     sub1: "Guarda ofertas con enlaces (LinkedIn, portales, etc.)",

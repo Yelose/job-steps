@@ -4,13 +4,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth-service';
 import { SnackbarService } from '../../../../shared/services/snackbar-service';
 
 @Component({
   selector: 'app-register',
-  imports: [MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule, ReactiveFormsModule, RouterLink],
+  imports: [MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule, ReactiveFormsModule],
   templateUrl: './register.html',
   styleUrl: './register.scss'
 })

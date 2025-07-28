@@ -10,8 +10,8 @@ html {
 
   // Apply Material theme using prebuilt palettes
   @include mat.theme((color: (primary: mat.$azure-palette,
-        secondary: mat.$violet-palette,
-        tertiary: mat.$cyan-palette,
+        secondary: mat.$magenta-palette,
+        tertiary: mat.$violet-palette,
       ),
       typography: Roboto,
       density: 0,
@@ -20,8 +20,8 @@ html {
 
 // Default body background and text color using system tokens
 body {
-  background-color: var(--mat-sys-color-surface);
-  color: var(--mat-sys-color-on-surface);
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
   font-family: Roboto, "Helvetica Neue", sans-serif;
   margin: 0;
   padding: 0;
@@ -35,16 +35,6 @@ h1 {
 h2 {
   font-size: calc($font-size * 1.2);
   font-weight: 200;
-}
-
-// Optional toolbar style using system tokens
-
-// Optional footer style
-footer {
-  background-color: var(--mat-sys-color-secondary-container);
-  color: var(--mat-sys-color-on-secondary-container);
-  padding: 1rem;
-  text-align: center;
 }
 
 // Ensure full height layout
@@ -91,12 +81,12 @@ body {
 mat-card {
   overflow: hidden;
 
-  @include mat.card-overrides((elevated-container-color: var(--mat-sys-tertiary),
+  @include mat.card-overrides((elevated-container-color: var(--mat-sys-tertiary-fixed-dim),
       elevated-container-elevation: var(--mat-sys-level3),
-      title-text-font: var(--mat-sys-on-tertiary)));
+    ));
 
   mat-card-header {
-    color: var(--mat-sys-on-tertiary);
+    color: var(--mat-sys-on-tertiary-fixed-dim);
   }
 
   mat-card-content {

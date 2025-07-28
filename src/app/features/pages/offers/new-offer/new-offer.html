@@ -1,4 +1,4 @@
-<form [formGroup]="offerForm" (ngSubmit)="submit()">
+<form [formGroup]="offerForm">
     <section>
         <header>
             <h2>Datos básicos de la oferta</h2>
@@ -95,7 +95,7 @@
                     <input matInput formControlName="newStageName" (keydown.enter)="addStage()" />
                 </mat-form-field>
 
-                <button matButton="filled" type="button" [disabled]="!newStageName?.value.trim()?.length"
+                <button matButton="filled" type="button" [disabled]="!newStageName.value?.trim()?.length"
                     (click)="addStage()">
                     Añadir etapa
                 </button>
@@ -135,8 +135,8 @@
             <h2> Enviar formulario </h2>
         </header>
         <main class="submit-buttons-container">
-            <button matButton="filled" type="submit">Guardar Oferta</button>
-            <button matButton="tonal" routerLink="/offers">Volver a ofertas</button>
+            <button matButton="filled" type="button" (click)="submit()">Guardar Oferta</button>
+            <button matButton="tonal" type="button" (click)="backToOffers()">Volver a ofertas</button>
             <button matButton="filled" type="button" class="delete" (click)="resetForm()">Borrar formulario</button>
         </main>
     </section>

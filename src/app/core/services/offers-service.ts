@@ -1,5 +1,5 @@
 import { signal, computed, inject, Injectable, effect } from '@angular/core';
-import { addDoc, collection, collectionData, CollectionReference, deleteDoc, doc, DocumentData, Firestore } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, CollectionReference, deleteDoc, doc, DocumentData, Firestore, updateDoc } from '@angular/fire/firestore';
 import { AuthService } from './auth-service';
 import { JobOfferInterface } from '../models/job-offer-interface';
 
@@ -12,7 +12,7 @@ export class OffersService {
   private user = computed(() => this.authService.currentUser())
 
   private offersCollection = computed(() => {
-    const user = this.authService.currentUser();
+    const user = this.authService.user;
     return user ? collection(this.firestore, `job-steps/${user.uid}/offers`) : null;
   });
 
@@ -40,10 +40,20 @@ export class OffersService {
     addDoc(col, offer);
   }
 
+  editOffer(id: string, offer: Omit<JobOfferInterface, 'id'>) {
+    const user = this.user();
+    if (!user) throw new Error("Usuario no autenticado");
+
+    const ref = doc(this.firestore, `job-steps/${user.uid}/offers/${id}`);
+    updateDoc(ref, offer);
+  }
+
   deleteOffer(id: string) {
     const user = this.user();
     if (!user) throw new Error("Usuario no autenticado");
     const ref = doc(this.firestore, `job-steps/${user.uid}/offers/${id}`);
     deleteDoc(ref);
   }
+
+
 }
