@@ -1,1 +1,15 @@
-<p>notice-component works!</p>
+<mat-card appearance="outlined">
+    <mat-card-header>
+        <div mat-card-avatar>
+            <mat-icon [fontIcon]="{{notice.icon}}"> </mat-icon>
+        </div>
+        <mat-card-title>{{notice.title}}</mat-card-title>
+        <mat-card-subtitle>{{notice.subtitle}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        @for (n of notice.notices; track notice){
+        <p>{{n}}</p>
+        }
+    </mat-card-content>
+
+</mat-card>
