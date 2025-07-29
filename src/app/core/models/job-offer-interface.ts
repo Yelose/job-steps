@@ -1,4 +1,5 @@
 import { JobContractType } from "./job-contract-type-model";
+import { JobOfferStatus } from "./job-offer-status";
 import { JobScheduleType } from "./job-schedule-model";
 import { StageModel } from "./stage-model";
 
@@ -18,4 +19,5 @@ export interface JobOfferInterface {
     salary?: string;
     selectionStages: StageModel[];
     personalObjective?: string;
+    status: JobOfferStatus;
 }

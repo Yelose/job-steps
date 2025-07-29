@@ -18,6 +18,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { JobContractType, JobContractTypeModel } from '../../../../core/models/job-contract-type-model';
 import { JobScheduleModel, JobScheduleType } from '../../../../core/models/job-schedule-model';
 import { DateConvertionService } from '../../../../shared/utils/date-convertion-service';
+import { JobOfferStatus, JobOfferStatusModel } from '../../../../core/models/job-offer-status';
 
 @Component({
   selector: 'app-new-offer',
@@ -55,14 +56,15 @@ export class NewOffer {
 
     this.isEditMode.set(true);
     const validDate = this.dateService.toValidDate(offer.date);
-    this.offerForm.patchValue({ ...offer, date: new Date(validDate) });
+    this.offerForm.patchValue({ ...offer, date: new Date(validDate), status: offer.status ?? "pending" });
 
     this.selectionStages.clear();
     offer.selectionStages.forEach(stage => {
       this.selectionStages.push(
         this.fb.group({
           name: this.fb.control(stage.name),
-          completed: this.fb.control(stage.completed)
+          completed: this.fb.control(stage.completed),
+          date: this.fb.control(stage.date ?? null)
         })
       );
     });
@@ -84,12 +86,15 @@ export class NewOffer {
     salary: new FormControl(''),
     selectionStages: this.fb.array<FormGroup>([]),
     newStageName: new FormControl(''),
-    personalObjective: new FormControl("")
+    newStageDate: new FormControl<Date | null>(null),
+    personalObjective: new FormControl(""),
+    status: new FormControl("pending")
   });
 
   readonly stagesSignal = signal<FormGroup[]>([]);
   readonly scheduleOptions = JobScheduleModel.OPTIONS;
   readonly contractTypeOptions = JobContractTypeModel.OPTIONS;
+  readonly statusOptions = JobOfferStatusModel.getAll()
 
   readonly canAddStage = computed(() => {
     this.formArrayVersion(); // reactiva el computed
@@ -115,20 +120,27 @@ export class NewOffer {
   get selectionStages(): FormArray<FormGroup> {
     return this.offerForm.get('selectionStages') as FormArray<FormGroup>;
   }
+  get newStageDate() { return this.offerForm.get("newStageDate") as FormControl }
   get newStageName() { return this.offerForm.get("newStageName") as FormControl }
   get personalObjective() { return this.offerForm.get("personalObjective") as FormControl }
+  get status() { return this.offerForm.get("status") as FormControl }
 
   addStage() {
     const name = this.newStageName.value.trim();
+    const date = this.newStageDate.value;
+
     if (!name) return;
 
     const stage = this.fb.group({
       name: this.fb.control(name),
       completed: this.fb.control(false),
+      date: this.fb.control(date ?? null)
     });
 
     this.selectionStages.push(stage);
     this.newStageName.reset();
+    this.newStageDate.reset(); // ← resetear también la fecha
+
     this.stagesSignal.set([...this.selectionStages.controls]); // ← Actualiza la señal
   }
 
@@ -158,7 +170,7 @@ export class NewOffer {
   submit() {
     const { title, company, location, offerUrl, companyUrl, date,
       submitted, coverLetter, description, schedule, contractType,
-      salary, personalObjective } = this.offerForm.value;
+      salary, personalObjective, status } = this.offerForm.value;
 
     if (!this.offerForm.valid || !title || !company || !offerUrl || !companyUrl) {
       this.snackBarService.show("Por favor, completa los campos obligatorios", "error");
@@ -178,7 +190,8 @@ export class NewOffer {
       contractType: contractType as JobContractType,
       salary: salary || '',
       personalObjective: personalObjective || '',
-      selectionStages: this.selectionStages.value
+      selectionStages: this.selectionStages.value,
+      status: status as JobOfferStatus
     };
 
     if (this.isEditMode()) {

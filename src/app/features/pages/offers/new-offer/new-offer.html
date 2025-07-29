@@ -77,6 +77,18 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline">
+                <mat-label>Estado</mat-label>
+                <mat-select formControlName="status">
+                    @for (s of statusOptions; track s) {
+                    <mat-option [value]="s.value">
+                        <mat-icon class="icon-with-text" fontIcon="{{ s.icon }}"></mat-icon>
+                        {{ s.label }}
+                    </mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
                 <mat-label>Salario</mat-label>
                 <input matInput formControlName="salary" />
             </mat-form-field>
@@ -91,8 +103,15 @@
             <!-- Input + botón de añadir etapa -->
             <div>
                 <mat-form-field appearance="outline">
-                    <mat-label>Nueva etapa</mat-label>
+                    <mat-label>Nombre de la etapa</mat-label>
                     <input matInput formControlName="newStageName" (keydown.enter)="addStage()" />
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label>Fecha de la etapa (opcional)</mat-label>
+                    <input matInput [matDatepicker]="newStageDatePicker" formControlName="newStageDate" />
+                    <mat-datepicker-toggle matIconSuffix [for]="newStageDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #newStageDatePicker></mat-datepicker>
                 </mat-form-field>
 
                 <button matButton="filled" type="button" [disabled]="!newStageName.value?.trim()?.length"
@@ -107,6 +126,15 @@
                 <div [formGroupName]="i">
                     <mat-checkbox formControlName="completed">Etapa completada</mat-checkbox>
                     <span>{{ stage.value.name }}</span>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Fecha de la etapa</mat-label>
+                        <input matInput [matDatepicker]="sharedPicker" formControlName="date" />
+                        <mat-datepicker-toggle matIconSuffix [for]="sharedPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #sharedPicker></mat-datepicker>
+                    </mat-form-field>
+
+
                     <button mat-icon-button type="button" (click)="removeStage(i)">
                         <mat-icon>delete</mat-icon>
                     </button>

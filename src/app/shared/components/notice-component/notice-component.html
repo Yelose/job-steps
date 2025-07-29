@@ -1,7 +1,7 @@
 <mat-card appearance="outlined">
     <mat-card-header>
         <div mat-card-avatar>
-            <mat-icon [fontIcon]="{{notice.icon}}"> </mat-icon>
+            <mat-icon [fontIcon]="notice.icon || ''"> </mat-icon>
         </div>
         <mat-card-title>{{notice.title}}</mat-card-title>
         <mat-card-subtitle>{{notice.subtitle}}</mat-card-subtitle>
