@@ -64,7 +64,7 @@ export class NewOffer {
         this.fb.group({
           name: this.fb.control(stage.name),
           completed: this.fb.control(stage.completed),
-          date: this.fb.control(stage.date ?? null)
+          date: this.fb.control(this.dateService.toValidDate(stage.date) ?? null)
         })
       );
     });
@@ -83,7 +83,8 @@ export class NewOffer {
     description: new FormControl(''),
     schedule: new FormControl<JobScheduleType>(JobScheduleModel.OPTIONS[0]),
     contractType: new FormControl<JobContractType>(JobContractTypeModel.OPTIONS[0]),
-    salary: new FormControl(''),
+    companySalary: new FormControl(''),
+    desiredSalary: new FormControl(''),
     selectionStages: this.fb.array<FormGroup>([]),
     newStageName: new FormControl(''),
     newStageDate: new FormControl<Date | null>(null),
@@ -116,7 +117,8 @@ export class NewOffer {
   get description() { return this.offerForm.get('description'); }
   get schedule() { return this.offerForm.get('schedule'); }
   get contractType() { return this.offerForm.get('contractType'); }
-  get salary() { return this.offerForm.get('salary'); }
+  get companySalary() { return this.offerForm.get('companySalary'); }
+  get desiredSalary() { return this.offerForm.get('desiredSalary'); }
   get selectionStages(): FormArray<FormGroup> {
     return this.offerForm.get('selectionStages') as FormArray<FormGroup>;
   }
@@ -169,10 +171,19 @@ export class NewOffer {
 
   submit() {
     const { title, company, location, offerUrl, companyUrl, date,
-      submitted, coverLetter, description, schedule, contractType,
-      salary, personalObjective, status } = this.offerForm.value;
+      submitted, coverLetter, description, schedule, contractType, companySalary,
+      desiredSalary, personalObjective, status } = this.offerForm.value;
 
     if (!this.offerForm.valid || !title || !company || !offerUrl || !companyUrl) {
+      console.log('Formulario inválido');
+      console.log('Errores generales:', this.offerForm.errors);
+      console.log('Errores por control:');
+      Object.entries(this.offerForm.controls).forEach(([key, control]) => {
+        if (control.invalid) console.warn(key, control.errors);
+      });
+      this.selectionStages.controls.forEach((group, index) => {
+        if (group.invalid) console.warn(`Etapa ${index} inválida`, group.value, group.errors);
+      });
       this.snackBarService.show("Por favor, completa los campos obligatorios", "error");
       return;
     }
@@ -188,7 +199,8 @@ export class NewOffer {
       description: description || '',
       schedule: schedule as JobScheduleType,
       contractType: contractType as JobContractType,
-      salary: salary || '',
+      companySalary: companySalary || '',
+      desiredSalary: desiredSalary || '',
       personalObjective: personalObjective || '',
       selectionStages: this.selectionStages.value,
       status: status as JobOfferStatus

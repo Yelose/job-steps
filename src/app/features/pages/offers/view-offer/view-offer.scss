@@ -1,0 +1,31 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+section {
+    padding: 3vh 4vw;
+
+    width: min(1200px, 90%);
+
+    header {
+        h1 {
+            text-align: center;
+        }
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        gap: 1vh;
+    }
+
+    mat-accordion {
+        mat-expansion-panel {
+            p {
+                padding-top: 10px;
+            }
+        }
+    }
+}

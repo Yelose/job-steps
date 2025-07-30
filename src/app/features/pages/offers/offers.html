@@ -41,6 +41,10 @@
                 <button mat-icon-button (click)="delete(offer.id)">
                     <mat-icon class="delete">delete</mat-icon>
                 </button>
+
+                <button mat-icon-button [routerLink]="['/view-offer', offer.id]" matTooltip="Ver oferta">
+                    <mat-icon>visibility</mat-icon>
+                </button>
             </td>
         </ng-container>
 

@@ -16,7 +16,8 @@ export interface JobOfferInterface {
     description?: string;
     schedule?: JobScheduleType;
     contractType?: JobContractType;
-    salary?: string;
+    companySalary?: string;
+    desiredSalary?: string;
     selectionStages: StageModel[];
     personalObjective?: string;
     status: JobOfferStatus;
