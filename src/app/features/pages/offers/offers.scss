@@ -14,3 +14,17 @@ main {
     width: fit-content;
     box-shadow: var(--mat-sys-level1);
 }
+
+.edit {
+    color: var(--mat-sys-tertiary);
+}
+
+.eye {
+    color: var(--mat-sys-primary)
+}
+
+
+th[mat-header-cell] {
+    background-color: var(--mat-sys-primary-fixed);
+    color: var(--mat-sys-on-primary-fixed)
+}

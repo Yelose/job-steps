@@ -44,9 +44,14 @@ section {
 
         mat-chip-set {
             mat-chip {
+                @include mat.chips-overrides((outline-color: var(--mat-sys-on-tertiary-fixed-dim),
+                        label-text-color: var(--mat-sys-on-tertiary-fixed-dim)));
+                background-color: var(--mat-sys-tertiary-fixed-dim);
+
+
                 mat-icon {
                     font-size: 20px;
-                    color: var(--mat-sys-tertiary);
+                    color: var(--mat-sys-on-tertiary-fixed-dim);
                 }
             }
         }
@@ -81,12 +86,13 @@ section {
     gap: 7px;
 }
 
+
 mat-icon {
     color: var(--mat-sys-primary);
 }
 
 mat-divider {
-    @include mat.divider-overrides((color: var(--mat-sys-secondary),
+    @include mat.divider-overrides((color: var(--mat-sys-secondary-fixed),
         ));
 }
 
@@ -97,4 +103,8 @@ mat-divider {
 
 .delete {
     color: var(--mat-sys-error);
+}
+
+mat-expansion-panel-header {
+    background-color: var(--mat-sys-primary-fixed);
 }
