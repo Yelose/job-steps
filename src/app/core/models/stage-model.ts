@@ -1,5 +1,5 @@
 export interface StageModel {
     name: string;
     completed: boolean;
-    date?: Date;
+    date: Date | null;
 }

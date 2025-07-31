@@ -55,8 +55,15 @@ export class NewOffer {
     if (!offer) return;
 
     this.isEditMode.set(true);
-    const validDate = this.dateService.toValidDate(offer.date);
-    this.offerForm.patchValue({ ...offer, date: new Date(validDate), status: offer.status ?? "pending" });
+
+    const offerPlain = { ...offer }; // copia superficial, sin métodos
+    const validDate = this.dateService.toValidDate(offerPlain.date);
+
+    this.offerForm.patchValue({
+      ...offerPlain,
+      date: new Date(validDate),
+      status: offerPlain.status ?? "pending"
+    });
 
     this.selectionStages.clear();
     offer.selectionStages.forEach(stage => {
@@ -184,6 +191,7 @@ export class NewOffer {
       this.selectionStages.controls.forEach((group, index) => {
         if (group.invalid) console.warn(`Etapa ${index} inválida`, group.value, group.errors);
       });
+
       this.snackBarService.show("Por favor, completa los campos obligatorios", "error");
       return;
     }
@@ -202,12 +210,20 @@ export class NewOffer {
       companySalary: companySalary || '',
       desiredSalary: desiredSalary || '',
       personalObjective: personalObjective || '',
-      selectionStages: this.selectionStages.value,
+      selectionStages: this.selectionStages.controls.map(group => ({
+        name: group.get('name')?.value ?? '',
+        completed: group.get('completed')?.value ?? false,
+        date: group.get('date')?.value instanceof Date
+          ? group.get('date')?.value
+          : null
+      })),
       status: status as JobOfferStatus
     };
 
+
     if (this.isEditMode()) {
       if (this.offerId) {
+
         this.offersService.editOffer(this.offerId, offer);
         this.snackBarService.show("Oferta actualizada con éxito", "success");
       } else {
