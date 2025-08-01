@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "yelose"
+  },
+  "targets": {
+    "job-steps": {
+      "hosting": {
+        "job-steps": [
+          "job-steps"
+        ]
+      }
+    }
+  }
+}
