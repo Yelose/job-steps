@@ -1,54 +1,51 @@
 @use "@angular/material" as mat;
 
-:host {
+.app-container {
   display: flex;
   flex-direction: column;
   height: 100dvh;
   width: 100%;
-}
+  overflow: hidden;
 
-main {
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
 
-  section {
+  main {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
 
-    mat-sidenav-container {
-      @include mat.sidenav-overrides((container-background-color: var(--mat-sys-secondary-container),
-          container-text-color: var(--mat-sys-on-secondary-container),
-          container-elevation-shadow: var(--mat-sys-level2),
-        ));
-      height: 100%;
+    section {
 
-      mat-sidenav {
-        display: flex;
-        flex-direction: column;
-        width: 300px;
-        height: 85dvh;
-        align-self: center;
-        box-shadow: var(--mat-sys-level4);
+      mat-sidenav-container {
+        @include mat.sidenav-overrides((container-background-color: var(--mat-sys-secondary-container),
+            container-text-color: var(--mat-sys-on-secondary-container),
+            container-elevation-shadow: var(--mat-sys-level2),
+          ));
+        height: 100%;
 
-        mat-nav-list {
-          a {
-            div {
-              display: flex;
-              align-items: center;
-              gap: 10px;
+        mat-sidenav {
+          display: flex;
+          flex-direction: column;
+          width: 300px;
+          height: 85dvh;
+          align-self: center;
+          box-shadow: var(--mat-sys-level4);
+
+          mat-nav-list {
+            a {
+              div {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+              }
             }
           }
         }
-      }
 
-      mat-sidenav-content {
-        flex: 1;
-        overflow-y: scroll;
+
       }
     }
+
+
   }
-
-
 }

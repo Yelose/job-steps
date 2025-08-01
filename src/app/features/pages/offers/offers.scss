@@ -1,18 +1,27 @@
 @use "@angular/material" as mat;
 
 :host {
-    height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 5vh;
+    padding: 5dvh 0;
     gap: 20px;
+    overflow: hidden;
+
 }
 
 main {
-    width: fit-content;
+    width: min(1200px, 95%);
     box-shadow: var(--mat-sys-level1);
+    display: flex;
+    flex-direction: column;
+
+    table[mat-table] {
+        width: 100%;
+        flex-basis: 90%;
+        box-shadow: var(--mat-sys-level3);
+    }
 }
 
 .edit {
@@ -27,4 +36,9 @@ main {
 th[mat-header-cell] {
     background-color: var(--mat-sys-primary-fixed);
     color: var(--mat-sys-on-primary-fixed)
+}
+
+.actions {
+    display: flex;
+    flex-wrap: nowrap;
 }

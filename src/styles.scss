@@ -18,6 +18,12 @@ html {
     ));
 }
 
+// Ensure full height layout
+html,
+body {
+  height: 100%;
+}
+
 // Default body background and text color using system tokens
 body {
   background-color: var(--mat-sys-surface);
@@ -37,11 +43,6 @@ h2 {
   font-weight: 200;
 }
 
-// Ensure full height layout
-html,
-body {
-  height: 100%;
-}
 
 /* You can add global styles to this file, and also import other style files */
 
@@ -51,17 +52,12 @@ body {
   box-sizing: border-box;
 }
 
-html,
-body {
-  height: 100%;
-}
-
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .snackbar-success {
-  @include mat.snack-bar-overrides((container-color: rgb(86, 189, 38),
+  @include mat.snack-bar-overrides((container-color: rgb(33, 75, 14),
       button-color: var(--mat-sys-primary),
       supporting-text-color: var(--mat-sys-on-primary)));
 }

@@ -1,89 +1,93 @@
-<header>
-  <app-main-toolbar />
-</header>
-<main>
-  <section>
-    <mat-sidenav-container>
-      <mat-sidenav #drawer fixedInViewport mode="side" [opened]="drawerOpen()" (click)="closeDrawer()">
-        <mat-nav-list>
-          <h3 mat-subheader>Secciones</h3>
-          <a mat-list-item routerLink="" routerLinkActive="active-link">
-            <div>
-              <mat-icon>home</mat-icon>
-              <span>Inicio</span>
-            </div>
-          </a>
-          <a mat-list-item routerLink="dashboard" [disabled]="!loggedIn()">
-            <div>
-              <mat-icon>dashboard</mat-icon>
-              <span>Panel de Control</span>
-            </div>
-          </a>
-          <a mat-list-item routerLink="stats" [disabled]="!loggedIn()">
-            <div>
-              <mat-icon>bar_chart</mat-icon>
-              <span>Estadísticas</span>
-            </div>
-          </a>
+<div class="app-container">
 
-          <mat-divider />
+  <header>
+    <app-main-toolbar />
+  </header>
 
-          <h3 mat-subheader>Candidaturas</h3>
-          <a mat-list-item routerLink="/offers" [disabled]="!loggedIn()">
-            <div>
-              <mat-icon>assignment_ind</mat-icon>
-              <span>Ofertas</span>
-            </div>
-          </a>
-          <a mat-list-item routerLink="/stages" [disabled]="!loggedIn()">
-            <div>
-              <mat-icon>work_history</mat-icon>
-              <span>Etapas</span>
-            </div>
-          </a>
+  <main>
+    <section>
+      <mat-sidenav-container>
+        <mat-sidenav #drawer fixedInViewport mode="side" [opened]="drawerOpen()" (click)="closeDrawer()">
+          <mat-nav-list>
+            <h3 mat-subheader>Secciones</h3>
+            <a mat-list-item routerLink="" routerLinkActive="active-link">
+              <div>
+                <mat-icon>home</mat-icon>
+                <span>Inicio</span>
+              </div>
+            </a>
+            <a mat-list-item routerLink="dashboard" [disabled]="!loggedIn()">
+              <div>
+                <mat-icon>dashboard</mat-icon>
+                <span>Panel de Control</span>
+              </div>
+            </a>
+            <a mat-list-item routerLink="stats" [disabled]="!loggedIn()">
+              <div>
+                <mat-icon>bar_chart</mat-icon>
+                <span>Estadísticas</span>
+              </div>
+            </a>
 
-          <mat-divider />
+            <mat-divider />
 
-          <h3 mat-subheader>Mi perfil</h3>
-          <a mat-list-item routerLink="/profile" [disabled]="!loggedIn()">
-            <div>
-              <mat-icon>person</mat-icon>
-              <span>Perfil</span>
-            </div>
-          </a>
+            <h3 mat-subheader>Candidaturas</h3>
+            <a mat-list-item routerLink="/offers" [disabled]="!loggedIn()">
+              <div>
+                <mat-icon>assignment_ind</mat-icon>
+                <span>Ofertas</span>
+              </div>
+            </a>
+            <a mat-list-item routerLink="/stages" [disabled]="!loggedIn()">
+              <div>
+                <mat-icon>work_history</mat-icon>
+                <span>Etapas</span>
+              </div>
+            </a>
 
-          <mat-divider />
-          @if (!loggedIn()) {
-          <a mat-list-item routerLink="/login">
-            <div>
-              <mat-icon>login</mat-icon>
-              <span>Iniciar sesión</span>
-            </div>
-          </a>
-          <a mat-list-item routerLink="/register">
-            <div>
-              <mat-icon>person_add</mat-icon>
-              <span>Registrarse</span>
-            </div>
-          </a>
+            <mat-divider />
 
-          } @if(loggedIn()){
-          <a mat-list-item (click)="logout()">
-            <div>
-              <mat-icon>logout</mat-icon>
-              <span>Cerrar sesión</span>
-            </div>
-          </a>
-          }
-        </mat-nav-list>
-      </mat-sidenav>
-      <mat-sidenav-content>
+            <h3 mat-subheader>Mi perfil</h3>
+            <a mat-list-item routerLink="/profile" [disabled]="!loggedIn()">
+              <div>
+                <mat-icon>person</mat-icon>
+                <span>Perfil</span>
+              </div>
+            </a>
 
-        <router-outlet />
-      </mat-sidenav-content>
-    </mat-sidenav-container>
-  </section>
-  <footer>
-    <app-footer />
-  </footer>
-</main>
+            <mat-divider />
+            @if (!loggedIn()) {
+            <a mat-list-item routerLink="/login">
+              <div>
+                <mat-icon>login</mat-icon>
+                <span>Iniciar sesión</span>
+              </div>
+            </a>
+            <a mat-list-item routerLink="/register">
+              <div>
+                <mat-icon>person_add</mat-icon>
+                <span>Registrarse</span>
+              </div>
+            </a>
+
+            } @if(loggedIn()){
+            <a mat-list-item (click)="logout()">
+              <div>
+                <mat-icon>logout</mat-icon>
+                <span>Cerrar sesión</span>
+              </div>
+            </a>
+            }
+          </mat-nav-list>
+        </mat-sidenav>
+        <mat-sidenav-content>
+
+          <router-outlet />
+        </mat-sidenav-content>
+      </mat-sidenav-container>
+    </section>
+    <footer>
+      <app-footer />
+    </footer>
+  </main>
+</div>
