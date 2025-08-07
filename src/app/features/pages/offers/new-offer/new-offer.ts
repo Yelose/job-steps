@@ -49,8 +49,6 @@ export class NewOffer {
   set id(id: string | null) {
     if (!id) return;
     this.offerId = id; // <- guardar el id
-    console.log("id: ", id)
-    console.log("Offer id: ", this.offerId)
     const offer = this.allOffers().find(o => o.id === id);
     if (!offer) return;
 
@@ -61,7 +59,7 @@ export class NewOffer {
 
     this.offerForm.patchValue({
       ...offerPlain,
-      date: new Date(validDate),
+      date: this.toSafeDate(offerPlain.date),
       status: offerPlain.status ?? "pending"
     });
 
@@ -71,10 +69,11 @@ export class NewOffer {
         this.fb.group({
           name: this.fb.control(stage.name),
           completed: this.fb.control(stage.completed),
-          date: this.fb.control(this.dateService.toValidDate(stage.date) ?? null)
+          date: new FormControl(this.toSafeDate(stage.date)),
         })
       );
     });
+
     this.stagesSignal.set([...this.selectionStages.controls]);
   }
 
@@ -143,7 +142,7 @@ export class NewOffer {
     const stage = this.fb.group({
       name: this.fb.control(name),
       completed: this.fb.control(false),
-      date: this.fb.control(date ?? null)
+      date: this.fb.control(date ?? null, { validators: [] })
     });
 
     this.selectionStages.push(stage);
@@ -151,6 +150,11 @@ export class NewOffer {
     this.newStageDate.reset(); // ← resetear también la fecha
 
     this.stagesSignal.set([...this.selectionStages.controls]); // ← Actualiza la señal
+  }
+
+  private toSafeDate(input: unknown): Date | null {
+    const date = new Date(input as string);
+    return !isNaN(date.getTime()) ? date : null;
   }
 
   removeStage(index: number) {
@@ -182,15 +186,6 @@ export class NewOffer {
       desiredSalary, personalObjective, status } = this.offerForm.value;
 
     if (!this.offerForm.valid || !title || !company || !offerUrl || !companyUrl) {
-      console.log('Formulario inválido');
-      console.log('Errores generales:', this.offerForm.errors);
-      console.log('Errores por control:');
-      Object.entries(this.offerForm.controls).forEach(([key, control]) => {
-        if (control.invalid) console.warn(key, control.errors);
-      });
-      this.selectionStages.controls.forEach((group, index) => {
-        if (group.invalid) console.warn(`Etapa ${index} inválida`, group.value, group.errors);
-      });
 
       this.snackBarService.show("Por favor, completa los campos obligatorios", "error");
       return;
