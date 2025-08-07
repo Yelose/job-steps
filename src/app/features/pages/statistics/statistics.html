@@ -1,0 +1,19 @@
+<header>
+    <h1>Estadísticas</h1>
+</header>
+<section>
+
+    @for(status of statuses; track status.value){
+    <mat-card>
+        <mat-card-header>
+            <mat-icon>{{status.icon}}</mat-icon>
+            <span>{{status.label}}</span>
+        </mat-card-header>
+        <mat-card-content>
+            <h2>{{countByStatus(status.value)}}</h2>
+            <p>ofertas</p>
+        </mat-card-content>
+    </mat-card>
+
+    }
+</section>

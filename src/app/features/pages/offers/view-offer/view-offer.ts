@@ -9,11 +9,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { JobOfferStatusModel } from '../../../../core/models/job-offer-status';
 import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-view-offer',
-  imports: [MatExpansionModule, MatChipsModule, MatCardModule, MatIconModule, MatDividerModule,
-    MatListModule
+  imports: [RouterLink, MatExpansionModule, MatChipsModule, MatCardModule, MatIconModule, MatDividerModule,
+    MatListModule, MatButtonModule
   ],
   templateUrl: './view-offer.html',
   styleUrl: './view-offer.scss',

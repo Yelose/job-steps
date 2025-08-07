@@ -1,0 +1,39 @@
+header {
+    padding: 1dvh;
+    text-align: center;
+}
+
+section {
+    padding: 5vh 3vw;
+    display: flex;
+    gap: 2vh;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    mat-card {
+        width: min(250px, 50%);
+
+        mat-card-header {
+            display: flex;
+            gap: 10%;
+            padding-bottom: 15px;
+        }
+
+        mat-card-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1vh 0;
+            gap: 1vh;
+
+            h2 {
+                font-weight: 900;
+            }
+
+            p {
+                font-weight: 200;
+            }
+        }
+    }
+}

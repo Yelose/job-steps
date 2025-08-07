@@ -120,8 +120,20 @@
             </mat-list-item>
             }
         </mat-list>
-
         }
+
+        <mat-divider></mat-divider>
+        <div>
+
+            <button matButton="tonal" [routerLink]="['/edit-offer', offer()?.id]">
+                <mat-icon>edit</mat-icon>
+                Editar oferta
+            </button>
+            <button matButton="outlined" routerLink="/offers">
+                <mat-icon>list</mat-icon>
+                Volver a ofertas
+            </button>
+        </div>
     </main>
 </section>
 }

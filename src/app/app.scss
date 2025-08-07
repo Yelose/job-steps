@@ -15,13 +15,14 @@
     overflow-y: scroll;
 
     section {
+      height: 100%;
 
       mat-sidenav-container {
+        height: 100%;
         @include mat.sidenav-overrides((container-background-color: var(--mat-sys-secondary-container),
             container-text-color: var(--mat-sys-on-secondary-container),
             container-elevation-shadow: var(--mat-sys-level2),
           ));
-        height: 100%;
 
         mat-sidenav {
           display: flex;

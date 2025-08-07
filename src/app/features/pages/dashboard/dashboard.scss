@@ -1,7 +1,9 @@
-header {
-    h1 {
+div {
+    height: fit-content;
+    overflow: hidden;
+
+    header {
+        padding: 1dvh;
         text-align: center;
     }
-
-    padding: 20px;
 }

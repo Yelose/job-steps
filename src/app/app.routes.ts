@@ -10,6 +10,7 @@ export const routes: Routes = [
     { path: "new-offer", loadComponent: () => import("./features/pages/offers/new-offer/new-offer").then(m => m.NewOffer) },
     { path: "edit-offer/:id", loadComponent: () => import("./features/pages/offers/new-offer/new-offer").then(m => m.NewOffer) },
     { path: "view-offer/:id", loadComponent: () => import("./features/pages/offers/view-offer/view-offer").then(m => m.ViewOffer) },
+    { path: "statistics", loadComponent: () => import("./features/pages/statistics/statistics").then(m => m.Statistics) },
     { path: "profile", loadComponent: () => import("./features/pages/profile/profile").then(m => m.Profile) },
     { path: "**", redirectTo: "not-found" },
 ];
