@@ -1,15 +1,17 @@
 <div>
-    <header>
-        <h1>Panel de control</h1>
-    </header>
-    <main>
+  <header>
+    <h1>Panel de control</h1>
+  </header>
+  <main>
+    <p>{{ profile().displayName }}</p>
 
-        <p> {{profile().displayName}}</p>
-    </main>
+    <h2>Formulario nueva oferta, configuración</h2>
+  </main>
 
-    <footer>
-        <button matButton="filled" routerLink="/new-offer">Nueva oferta de empleo</button>
-        <button matButton="outlined" routerLink="/offers">Ver mis ofertas</button>
-    </footer>
-
+  <footer>
+    <button matButton="filled" routerLink="/new-offer">
+      Nueva oferta de empleo
+    </button>
+    <button matButton="outlined" routerLink="/offers">Ver mis ofertas</button>
+  </footer>
 </div>

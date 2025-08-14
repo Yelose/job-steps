@@ -1,5 +1,4 @@
 <div class="app-container">
-
   <header>
     <app-main-toolbar />
   </header>
@@ -7,7 +6,13 @@
   <main>
     <section>
       <mat-sidenav-container>
-        <mat-sidenav #drawer fixedInViewport mode="side" [opened]="drawerOpen()" (click)="closeDrawer()">
+        <mat-sidenav
+          #drawer
+          fixedInViewport
+          mode="side"
+          [opened]="drawerOpen()"
+          (click)="closeDrawer()"
+        >
           <mat-nav-list>
             <h3 mat-subheader>Secciones</h3>
             <a mat-list-item routerLink="" routerLinkActive="active-link">
@@ -22,7 +27,7 @@
                 <span>Panel de Control</span>
               </div>
             </a>
-            <a mat-list-item routerLink="stats" [disabled]="!loggedIn()">
+            <a mat-list-item routerLink="statistics" [disabled]="!loggedIn()">
               <div>
                 <mat-icon>bar_chart</mat-icon>
                 <span>Estadísticas</span>
@@ -81,7 +86,6 @@
           </mat-nav-list>
         </mat-sidenav>
         <mat-sidenav-content>
-
           <router-outlet />
         </mat-sidenav-content>
       </mat-sidenav-container>
