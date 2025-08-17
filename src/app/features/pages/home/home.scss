@@ -1,70 +1,86 @@
 @use "@angular/material" as mat;
 
+$max-width: 1500px;
+
 :host {
-    display: flex;
-    flex-direction: column;
-    gap: 5vh;
+  display: flex;
+  flex-direction: column;
+  gap: 5vh;
 }
 
 header {
-    display: flex;
-    flex-direction: column;
-    gap: 2dvh;
-    padding: 3dvh 3dvw;
-
+  display: flex;
+  flex-direction: column;
+  gap: 2dvh;
+  padding: 3dvh 3dvw;
+  text-align: center;
 }
 
 main {
+  display: flex;
+  gap: 3dvw;
+  padding: 2dvh 3dvw 6dvh;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  max-width: $max-width;
+
+  mat-card {
     display: flex;
-    gap: 3dvw;
-    padding: 2dvh 3dvw 6dvh;
-    flex-wrap: wrap;
+    flex-direction: column;
+    min-width: 280px;
+    flex: 1;
 
-    mat-card {
-        display: flex;
-        flex-direction: column;
-        min-width: 280px;
-        flex: 1;
-
-        mat-card-header {
-            display: flex;
-            justify-content: center;
-            height: fit-content;
-            padding-bottom: 15px;
-        }
-
-        mat-card-content {
-            flex: 3;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            background-color: white;
-
-            mat-icon {
-                @include mat.icon-overrides((color: var(--mat-sys-primary),
-                    ));
-                width: 100%;
-                height: fit-content;
-                font-size: 46px;
-                padding: 10px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-        }
+    mat-card-header {
+      display: flex;
+      justify-content: center;
+      height: fit-content;
+      padding-bottom: 15px;
     }
+
+    mat-card-content {
+      flex: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      background-color: white;
+
+      mat-icon {
+        @include mat.icon-overrides(
+          (
+            color: var(--mat-sys-primary),
+          )
+        );
+        width: 100%;
+        height: fit-content;
+        font-size: 46px;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+  .about-app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3vh;
+    padding: 5vh 0;
+  }
 }
 
 footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3vh;
+  padding: 5vh 4vw;
+  max-width: $max-width;
+  margin: 0 auto;
+  div {
     display: flex;
-    flex-direction: column;
-    gap: 3vh;
-
-    div {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-
-    }
+    justify-content: center;
+    gap: 20px;
+  }
 }

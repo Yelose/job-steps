@@ -66,25 +66,34 @@ export class OffersService {
   private parseOffer(offer: JobOfferInterface): JobOfferDisplayModel {
     const patched: JobOfferInterface = {
       ...offer,
-      date: this.dateService.toValidDate(offer.date),
-      selectionStages: offer.selectionStages?.map(stage => ({
-        ...stage,
-        date: stage.date ? this.dateService.toValidDate(stage.date) : null
+      date: this.dateService.toValidDate(offer.date) ?? null as any, // si tu interfaz aún pide Date estricto, cámbiala a Date | null
+      selectionStages: offer.selectionStages?.map(st => ({
+        ...st,
+        date: this.dateService.toValidDate(st.date)
       })) ?? []
     };
-
     return new JobOfferDisplayModel(patched, this.textFormatter.toLineArray);
   }
+  // 🔧 helper: elimina undefined de forma profunda (objetos/arrays)
+  stripUndefined<T extends Record<string, any>>(obj: T): T {
+    const out: any = {};
+    for (const k of Object.keys(obj)) {
+      const v = obj[k];
+      if (v !== undefined) out[k] = v;
+    }
+    return out;
+  }
 
-  // Transforma datos de vista → para Firestore
-  private prepareForFirestore(offer: Omit<JobOfferInterface, 'id'>): Omit<JobOfferInterface, 'id'> {
-    return {
+  // 🔄 vista → Firestore
+  private prepareForFirestore(offer: Omit<JobOfferInterface, 'id'>) {
+    const prepared = {
       ...offer,
-      date: this.dateService.toValidDate(offer.date),
-      selectionStages: offer.selectionStages?.map(stage => ({
-        ...stage,
-        date: stage.date ? this.dateService.toValidDate(stage.date) : null
-      })) ?? []
+      date: this.dateService.toValidDate(offer.date ?? null),
+      selectionStages: (offer.selectionStages ?? []).map(st => ({
+        ...st,
+        date: this.dateService.toValidDate(st.date ?? null)
+      }))
     };
+    return this.stripUndefined(prepared);
   }
 }

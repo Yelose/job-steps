@@ -1,9 +1,76 @@
-div {
-    height: fit-content;
-    overflow: hidden;
+@use "@angular/material" as mat;
 
-    header {
-        padding: 1dvh;
-        text-align: center;
+main {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  gap: 2vh;
+  header {
+    padding: 1dvh;
+    text-align: center;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: calc(2vw + 5px);
+    width: fit-content;
+    background-color: var(--mat-sys-tertiary-fixed);
+    color: var(--mat-sys-on-tertiary-fixed);
+    box-shadow: var(--mat-sys-level1);
+    article {
+      display: flex;
+      gap: calc(1vw + 5px);
+      align-items: center;
     }
+    em {
+      flex: 1;
+      text-align: right;
+      font-weight: 500;
+      color: var(--mat-sys-primary);
+      font-style: normal;
+    }
+    mat-slide-toggle {
+      font-weight: 100;
+    }
+    mat-slide-toggle {
+      @include mat.slide-toggle-overrides(
+        (
+          label-text-weight: 100,
+        )
+      );
+    }
+    /* ====== VARIANTE .accent (tu segundo toggle) ====== */
+    mat-slide-toggle.accent {
+      @include mat.slide-toggle-overrides(
+        (
+          label-text-color: var(--mat-sys-on-tertiary-fixed),
+          /* ON en fixed */ selected-track-color: var(--mat-sys-on-primary),
+          selected-handle-color: var(--mat-sys-primary-fixed),
+          selected-icon-color: var(--mat-sys-on-primary-fixed),
+          selected-hover-track-color: var(--mat-sys-on-primary),
+          selected-hover-handle-color: var(--mat-sys-primary-fixed),
+          selected-pressed-track-color: var(--mat-sys-on-primary),
+          selected-pressed-handle-color: var(--mat-sys-primary-fixed),
+          selected-focus-track-color: var(--mat-sys-on-primary),
+          selected-focus-handle-color: var(--mat-sys-tertiary-fixed-dim),
+          selected-hover-state-layer-color: var(--mat-sys-tertiary-fixed-dim),
+          selected-pressed-state-layer-color: var(--mat-sys-tertiary-fixed-dim),
+          selected-focus-state-layer-color: var(--mat-sys-tertiary-fixed-dim),
+          disabled-label-text-color: var(--mat-sys-on-tertiary-fixed),
+          disabled-selected-track-color: var(--mat-sys-on-primary),
+          disabled-selected-handle-color: var(--mat-sys-primary-fixed),
+          disabled-selected-icon-color: var(--mat-sys-on-primary-fixed),
+          disabled-unselected-track-color: var(--mat-sys-on-error),
+          disabled-unselected-track-outline-color: var(--mat-sys-on-tertiary),
+          disabled-unselected-handle-color: var(--mat-sys-error),
+          disabled-unselected-icon-color: var(--mat-sys-on-error),
+          track-outline-color: var(--mat-sys-on-tertiary),
+        )
+      );
+    }
+  }
 }

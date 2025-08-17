@@ -1,83 +1,78 @@
 @use "@angular/material" as mat;
 
 :host {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 3dvh 3dvw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3dvh 3dvw;
 }
 
 form {
-    width: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  padding: 3vh 3vw;
+  gap: 5vh;
+
+  section {
+    box-shadow: var(--mat-sys-level3);
+    padding: 3vh 3vw;
     display: flex;
     flex-direction: column;
-    max-width: 1200px;
-    padding: 3vh 3vw;
-    gap: 5vh;
-
-    section {
-        box-shadow: var(--mat-sys-level3);
-        padding: 3vh 3vw;
-        display: flex;
-        flex-direction: column;
-        gap: 2vh;
-
-        header {
-            text-align: center;
-        }
-
-        main {
-            display: flex;
-            align-items: baseline;
-            flex-wrap: wrap;
-            gap: 2vw;
-
-            mat-form-field {
-                flex: 1;
-                min-width: 200px;
-
-                &.full {
-                    flex-basis: 100%;
-                }
-            }
-
-        }
-
-        &.stages {
-            main {
-                display: flex;
-                flex-direction: column;
-
-                div {
-                    width: 100%;
-                    display: flex;
-                    flex-wrap: wrap;
-                    align-items: center;
-                    justify-content: space-between;
-                    gap: 2vw;
-
-                    mat-form-field {
-                        flex: 1;
-                        min-width: 200px;
-                    }
-                }
-
-            }
-        }
-
-        &.submit-container {
-            box-shadow: none;
-        }
+    gap: 2vh;
+    background-color: var(--mat-sys-tertiary-fixed);
+    color: var(--mat-sys-on-tertiary-fixed);
+    header {
+      text-align: center;
     }
 
+    main {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 2vw;
 
+      mat-form-field {
+        flex: 1;
+        min-width: 200px;
+
+        &.full {
+          flex-basis: 100%;
+        }
+      }
+    }
+
+    &.stages {
+      main {
+        display: flex;
+        flex-direction: column;
+
+        div {
+          width: 100%;
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: space-between;
+          gap: 2vw;
+
+          mat-form-field {
+            flex: 1;
+            min-width: 200px;
+          }
+        }
+      }
+    }
+
+    &.submit-container {
+      box-shadow: none;
+    }
+  }
 }
 
-
-
 .submit-buttons-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding: 2vh;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 2vh;
 }

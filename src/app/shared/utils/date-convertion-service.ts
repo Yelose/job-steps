@@ -1,49 +1,43 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class DateConvertionService {
-  toValidDate(input: any): Date {
-    if (!input) return new Date('Invalid Date');
+  /** Devuelve Date válida o null. Nunca "Invalid Date". */
+  toValidDate(input: any): Date | null {
+    if (input == null || input === '') return null;
 
-    // Firestore Timestamp con método toDate(), es decir que si viene de Firestor y tiene
-    //.toDate(), lo convierte en una fecha válida.
     if (typeof input === 'object' && typeof input.toDate === 'function') {
-      return input.toDate();
+      return this.toValidDate(input.toDate());
     }
 
-    // Si ya es un Date válido, no hace nada
-    if (input instanceof Date && !isNaN(input.getTime())) {
-      return input;
+    if (input instanceof Date) {
+      return isNaN(input.getTime()) ? null : input;
     }
 
-    // Si es un número tipo timestamp, convierte un número en un fecha
     if (typeof input === 'number') {
-      return new Date(input);
+      const d = new Date(input);
+      return isNaN(d.getTime()) ? null : d;
     }
 
-    // Si es un string, lo convierte en una fecha
     if (typeof input === 'string') {
-      const date = new Date(input);
-      return !isNaN(date.getTime()) ? date : new Date('Invalid Date');
+      const d = new Date(input);
+      return isNaN(d.getTime()) ? null : d;
     }
 
-    // Si es un objeto tipo { seconds, nanoseconds }
-    //Esto es típico de Firestore, y convierte el campo seconds a milisegundos
-    if ('seconds' in input && typeof input.seconds === 'number') {
-      return new Date(input.seconds * 1000);
+    if (typeof input === 'object' && 'seconds' in input && typeof input.seconds === 'number') {
+      const d = new Date(input.seconds * 1000);
+      return isNaN(d.getTime()) ? null : d;
     }
 
-    return new Date('Invalid Date');
+    return null;
   }
-  toShortDate(input: any): string {
-    const date = this.toValidDate(input);
-    if (isNaN(date.getTime())) return "Fecha inválida"
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Meses comienzan en 0
-    const year = date.getFullYear();
 
+  toShortDate(input: any): string {
+    const d = this.toValidDate(input);
+    if (!d) return '';
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
     return `${day}/${month}/${year}`;
   }
 }

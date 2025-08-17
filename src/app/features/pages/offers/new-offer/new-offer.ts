@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from '@angular/core';
-import { FormArray, FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, computed, inject, signal, WritableSignal } from '@angular/core';
+import { AbstractControl, FormArray, FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, ValidatorFn, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,232 +8,260 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { computed, signal } from '@angular/core';
-import { Router } from '@angular/router';
-import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog-service';
-import { OffersService } from '../../../../core/services/offers-service';
-import { JobOfferInterface } from '../../../../core/models/job-offer-interface';
-import { SnackbarService } from '../../../../shared/services/snackbar-service';
 import { MatSelectModule } from '@angular/material/select';
-import { JobContractType, JobContractTypeModel } from '../../../../core/models/job-contract-type-model';
-import { JobScheduleModel, JobScheduleType } from '../../../../core/models/job-schedule-model';
+import { Router } from '@angular/router';
+
+import { OffersService } from '../../../../core/services/offers-service';
+import { SnackbarService } from '../../../../shared/services/snackbar-service';
+import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog-service';
 import { DateConvertionService } from '../../../../shared/utils/date-convertion-service';
+import { AuthService } from '../../../../core/services/auth-service';
+import { OfferFormConfigService } from '../../../../core/services/offer-form-config-service';
+
+import { DEFAULT_OFFER_FORM_CONFIG, OfferFormConfig, OfferFieldId, ALL_FIELDS } from '../../../../core/models/offer-field-id';
+import { JobOfferInterface } from '../../../../core/models/job-offer-interface';
 import { JobOfferStatus, JobOfferStatusModel } from '../../../../core/models/job-offer-status';
+import { JobScheduleModel, JobScheduleType } from '../../../../core/models/job-schedule-model';
+import { JobContractTypeModel, JobContractType } from '../../../../core/models/job-contract-type-model';
 
 @Component({
   selector: 'app-new-offer',
-  imports: [MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule, MatSelectModule,
-    ReactiveFormsModule, MatDatepickerModule, MatSlideToggleModule, MatCheckboxModule],
-  providers: [provideNativeDateAdapter(),
-  { provide: MAT_DATE_LOCALE, useValue: 'es-ES' } // importante para que la fecha aparezca DD/MM/AAAA
+  imports: [
+    ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule,
+    MatSelectModule, MatDatepickerModule, MatSlideToggleModule, MatCheckboxModule
   ],
+  providers: [provideNativeDateAdapter(), { provide: MAT_DATE_LOCALE, useValue: 'es-ES' }],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './new-offer.html',
   styleUrl: './new-offer.scss'
 })
 export class NewOffer {
-  fb = inject(NonNullableFormBuilder)
-  private confirmDialog = inject(ConfirmDialogService)
-  private formArrayVersion = signal(0); // para forzar reevaluación
-  private cdr = inject(ChangeDetectorRef); //forzar detección de cambios en el Dom
-  private offersService = inject(OffersService)
-  private router = inject(Router)
-  private snackBarService = inject(SnackbarService)
-  private allOffers = this.offersService.offersSignal
-  private dateService = inject(DateConvertionService)
-  readonly isEditMode = signal(false)
+  // servicios
+  private fb = inject(NonNullableFormBuilder);
+  private cdr = inject(ChangeDetectorRef);
+  private confirmDialog = inject(ConfirmDialogService);
+  private snack = inject(SnackbarService);
+  private router = inject(Router);
+  private offers = inject(OffersService);
+  private dateSvc = inject(DateConvertionService);
+  private auth = inject(AuthService);
+  private cfgSvc = inject(OfferFormConfigService);
+
+  // estado
+  readonly isEditMode = signal(false);
   private offerId: string | null = null;
+  private original = signal<JobOfferInterface | null>(null);
+  private allOffers = this.offers.offersSignal;
+
+  // selects
+  readonly scheduleOptions = JobScheduleModel.OPTIONS;
+  readonly contractTypeOptions = JobContractTypeModel.OPTIONS;
+  readonly statusOptions = JobOfferStatusModel.getAll();
+
+  // Sin secciones vacías
+  readonly showBasic = computed(() => {
+    const v = this.formCfg().visible;
+    return v.title || v.company || v.location || v.offerUrl || v.companyUrl || v.date || v.coverLetter || v.submitted;
+  });
+
+  readonly showInfo = computed(() => {
+    const v = this.formCfg().visible;
+    return v.description || v.schedule || v.contractType || v.status || v.companySalary || v.desiredSalary;
+  });
+
+  readonly showObjective = computed(() => this.formCfg().visible.personalObjective === true);
 
 
+  // ===== Config de Firebase (sin effect, sin bucles infinitos) =====
+  private _cfgLocal: WritableSignal<OfferFormConfig> = signal(DEFAULT_OFFER_FORM_CONFIG);
+  private _cfgLive: WritableSignal<OfferFormConfig> | null = null;
+
+  private get cfgSignal(): WritableSignal<OfferFormConfig> {
+    if (!this._cfgLive) {
+      const uid = this.auth.currentUser()?.uid ?? '';
+      if (uid) this._cfgLive = this.cfgSvc.getConfigSignal(uid);
+    }
+    return this._cfgLive ?? this._cfgLocal;
+  }
+
+  readonly formCfg = computed<OfferFormConfig>(() => this.cfgSignal());
+
+  // ===== Tipado por categorías (sin switch/case) =====
+  private readonly STR_FIELDS = new Set<OfferFieldId>([
+    'title', 'company', 'location', 'coverLetter', 'description',
+    'companySalary', 'desiredSalary', 'personalObjective', 'offerUrl', 'companyUrl'
+  ]);
+  private readonly DATE_FIELDS = new Set<OfferFieldId>(['date']);
+  private readonly BOOL_FIELDS = new Set<OfferFieldId>(['submitted']);
+
+  // validadores dinámicos
+  private validatorsFor(control: OfferFieldId, cfg: OfferFormConfig): ValidatorFn[] {
+    const v: ValidatorFn[] = [];
+    if (cfg.required[control]) v.push(Validators.required);
+    if (control === 'offerUrl' || control === 'companyUrl') v.push(Validators.pattern(/^https?:\/\//));
+    return v;
+  }
+
+  // valor inicial por campo, leyendo this.original()
+  private createControl(control: OfferFieldId, validators: ValidatorFn[] = []) {
+    const orig = this.original();
+    const raw = orig ? (orig as any)[control] : undefined;
+
+    const init =
+      this.STR_FIELDS.has(control) ? ((raw as string) ?? '') :
+        this.DATE_FIELDS.has(control) ? this.dateSvc.toValidDate(raw) :
+          this.BOOL_FIELDS.has(control) ? (typeof raw === 'boolean' ? raw : false) :
+            (raw ?? null); // schedule | contractType | status
+
+    return new FormControl(init, { validators });
+  }
+
+  // etapa con "name" obligatorio
+  private createStageGroup(init?: { name?: string; completed?: boolean; date?: Date | null }): FormGroup {
+    return this.fb.group({
+      name: this.fb.control((init?.name ?? ''), { validators: [Validators.required] }),
+      completed: this.fb.control(!!init?.completed),
+      date: new FormControl(this.dateSvc.toValidDate(init?.date)),
+    });
+  }
+
+  // ===== Form dinámico a partir de la config =====
+  readonly offerForm = computed<FormGroup<Record<string, AbstractControl<unknown, unknown>>>>(() => {
+    const cfg = this.formCfg();
+    const orig = this.original();
+
+    const selectionStagesFA = this.fb.array<FormGroup>(
+      (orig?.selectionStages ?? []).map(st => this.createStageGroup({
+        name: st.name, completed: st.completed, date: st.date
+      }))
+    );
+
+    type ControlsDict = Record<string, AbstractControl<unknown, unknown>>;
+
+    const dynamicControls = ALL_FIELDS
+      .filter(f => cfg.visible[f])
+      .reduce<ControlsDict>((acc, f) => {
+        acc[f] = this.createControl(f, this.validatorsFor(f, cfg));
+        return acc;
+      }, {});
+
+    const controls: ControlsDict = {
+      selectionStages: selectionStagesFA,
+      newStageName: new FormControl<string | null>(''),
+      newStageDate: new FormControl<Date | null>(null),
+      ...dynamicControls
+    };
+
+    return new FormGroup<ControlsDict>(controls);
+  });
+  get newStageNameText(): string {
+    const v = this.offerForm().get('newStageName')?.value;
+    return typeof v === 'string' ? v : '';
+  }
+
+  // ===== edición =====
   @Input()
   set id(id: string | null) {
     if (!id) return;
-    this.offerId = id; // <- guardar el id
-    const offer = this.allOffers().find(o => o.id === id);
-    if (!offer) return;
-
+    const found = this.allOffers().find(o => o.id === id);
+    if (!found) return;
+    this.offerId = id;
+    this.original.set(found);
     this.isEditMode.set(true);
-
-    const offerPlain = { ...offer }; // copia superficial, sin métodos
-    const validDate = this.dateService.toValidDate(offerPlain.date);
-
-    this.offerForm.patchValue({
-      ...offerPlain,
-      date: this.toSafeDate(offerPlain.date),
-      status: offerPlain.status ?? "pending"
-    });
-
-    this.selectionStages.clear();
-    offer.selectionStages.forEach(stage => {
-      this.selectionStages.push(
-        this.fb.group({
-          name: this.fb.control(stage.name),
-          completed: this.fb.control(stage.completed),
-          date: new FormControl(this.toSafeDate(stage.date)),
-        })
-      );
-    });
-
-    this.stagesSignal.set([...this.selectionStages.controls]);
   }
 
-  offerForm = this.fb.group({
-    title: new FormControl('', { validators: [Validators.required] }),
-    company: new FormControl('', { validators: [Validators.required] }),
-    location: new FormControl(''),
-    offerUrl: new FormControl('', { validators: [Validators.required, Validators.pattern(/^https?:\/\//)] }),
-    companyUrl: new FormControl('', { validators: [Validators.required, Validators.pattern(/^https?:\/\//)] }),
-    date: new FormControl(new Date()),
-    submitted: new FormControl(false),
-    coverLetter: new FormControl(''),
-    description: new FormControl(''),
-    schedule: new FormControl<JobScheduleType>(JobScheduleModel.OPTIONS[0]),
-    contractType: new FormControl<JobContractType>(JobContractTypeModel.OPTIONS[0]),
-    companySalary: new FormControl(''),
-    desiredSalary: new FormControl(''),
-    selectionStages: this.fb.array<FormGroup>([]),
-    newStageName: new FormControl(''),
-    newStageDate: new FormControl<Date | null>(null),
-    personalObjective: new FormControl(""),
-    status: new FormControl("pending")
-  });
-
-  readonly stagesSignal = signal<FormGroup[]>([]);
-  readonly scheduleOptions = JobScheduleModel.OPTIONS;
-  readonly contractTypeOptions = JobContractTypeModel.OPTIONS;
-  readonly statusOptions = JobOfferStatusModel.getAll()
-
-  readonly canAddStage = computed(() => {
-    this.formArrayVersion(); // reactiva el computed
-    const stages = this.selectionStages.controls;
-    if (!stages.length) return true;
-    const last = stages[stages.length - 1];
-    return last.valid;
-  });
-
-  // GETTERS
-  get title() { return this.offerForm.get('title'); }
-  get company() { return this.offerForm.get('company'); }
-  get location() { return this.offerForm.get('location'); }
-  get offerUrl() { return this.offerForm.get('offerUrl'); }
-  get companyUrl() { return this.offerForm.get('companyUrl'); }
-  get date() { return this.offerForm.get('date'); }
-  get submitted() { return this.offerForm.get('submitted'); }
-  get coverLetter() { return this.offerForm.get('coverLetter'); }
-  get description() { return this.offerForm.get('description'); }
-  get schedule() { return this.offerForm.get('schedule'); }
-  get contractType() { return this.offerForm.get('contractType'); }
-  get companySalary() { return this.offerForm.get('companySalary'); }
-  get desiredSalary() { return this.offerForm.get('desiredSalary'); }
-  get selectionStages(): FormArray<FormGroup> {
-    return this.offerForm.get('selectionStages') as FormArray<FormGroup>;
+  // ===== helpers plantilla =====
+  get selectionStagesFA(): FormArray<FormGroup> {
+    return this.offerForm().get('selectionStages') as FormArray<FormGroup>;
   }
-  get newStageDate() { return this.offerForm.get("newStageDate") as FormControl }
-  get newStageName() { return this.offerForm.get("newStageName") as FormControl }
-  get personalObjective() { return this.offerForm.get("personalObjective") as FormControl }
-  get status() { return this.offerForm.get("status") as FormControl }
 
   addStage() {
-    const name = this.newStageName.value.trim();
-    const date = this.newStageDate.value;
-
+    const nameCtrl = this.offerForm().get('newStageName') as FormControl<string | null>;
+    const dateCtrl = this.offerForm().get('newStageDate') as FormControl<Date | null>;
+    const name = (nameCtrl?.value ?? '').trim();
+    const date = dateCtrl?.value ?? null;
     if (!name) return;
 
-    const stage = this.fb.group({
-      name: this.fb.control(name),
-      completed: this.fb.control(false),
-      date: this.fb.control(date ?? null, { validators: [] })
-    });
-
-    this.selectionStages.push(stage);
-    this.newStageName.reset();
-    this.newStageDate.reset(); // ← resetear también la fecha
-
-    this.stagesSignal.set([...this.selectionStages.controls]); // ← Actualiza la señal
+    this.selectionStagesFA.push(this.createStageGroup({ name, completed: false, date }));
+    nameCtrl?.setValue('');
+    dateCtrl?.setValue(null);
+    this.cdr.markForCheck();
   }
 
-  private toSafeDate(input: unknown): Date | null {
-    const date = new Date(input as string);
-    return !isNaN(date.getTime()) ? date : null;
-  }
-
-  removeStage(index: number) {
-    this.confirmDialog.confirm('¿Seguro que deseas eliminar esta etapa?').subscribe((confirmed) => {
-      if (confirmed) {
-        this.selectionStages.removeAt(index);
-        this.stagesSignal.set([...this.selectionStages.controls]); // ← Actualiza la señal
-        this.cdr.markForCheck()
-      }
+  removeStage(i: number) {
+    this.confirmDialog.confirm('¿Seguro que deseas eliminar esta etapa?').subscribe(ok => {
+      if (!ok) return;
+      this.selectionStagesFA.removeAt(i);
+      this.cdr.markForCheck();
     });
   }
 
   resetForm() {
-    this.confirmDialog.confirm('¿Seguro de que quieres reiniciar el formulario? Esta acción va a borrar todos los campos', 'Borrando formulario').subscribe(
-      (confirm) => {
-        if (confirm) {
-          this.stagesSignal.set([])
-          this.offerForm.reset()
-          this.cdr.markForCheck()
-          this.offerForm.clearValidators()
-        }
-      }
-    )
+    this.confirmDialog.confirm('¿Seguro de que quieres reiniciar el formulario? Esta acción va a borrar todos los campos', 'Borrando formulario')
+      .subscribe(ok => { if (ok) { this.offerForm().reset(); this.cdr.markForCheck(); } });
   }
 
+  // ===== envío =====
   submit() {
-    const { title, company, location, offerUrl, companyUrl, date,
-      submitted, coverLetter, description, schedule, contractType, companySalary,
-      desiredSalary, personalObjective, status } = this.offerForm.value;
-
-    if (!this.offerForm.valid || !title || !company || !offerUrl || !companyUrl) {
-
-      this.snackBarService.show("Por favor, completa los campos obligatorios", "error");
+    const form = this.offerForm();
+    if (form.invalid) {
+      this.snack.show('Por favor, completa los campos obligatorios', 'error');
       return;
     }
+
+    const cfg = this.formCfg();
+    const vis = cfg.visible;
+    const f = form.value as Record<string, unknown>;
+    const orig = this.original();
+
+    // si el campo es visible → tomamos valor del form (o el previo si edito)
+    // si NO es visible → preservamos valor previo (en creación será undefined)
+    const take = <T>(k: OfferFieldId, val: T | null | undefined, prev: T | undefined): T | undefined =>
+      vis[k] ? (val ?? prev) : prev;
+
+    const stages = this.selectionStagesFA.controls.map(g => ({
+      name: g.get('name')?.value ?? '',
+      completed: g.get('completed')?.value ?? false,
+      date: g.get('date')?.value instanceof Date ? g.get('date')?.value : null
+    }));
+
     const offer: Omit<JobOfferInterface, 'id'> = {
-      title,
-      company,
-      location: location || '',
-      offerUrl,
-      companyUrl,
-      date: date || new Date(),
-      submitted: submitted ?? false,
-      coverLetter: coverLetter || '',
-      description: description || '',
-      schedule: schedule as JobScheduleType,
-      contractType: contractType as JobContractType,
-      companySalary: companySalary || '',
-      desiredSalary: desiredSalary || '',
-      personalObjective: personalObjective || '',
-      selectionStages: this.selectionStages.controls.map(group => ({
-        name: group.get('name')?.value ?? '',
-        completed: group.get('completed')?.value ?? false,
-        date: group.get('date')?.value instanceof Date
-          ? group.get('date')?.value
-          : null
-      })),
-      status: status as JobOfferStatus
+      // obligatorios lógicos del sistema (pero ahora opcionales en el modelo)
+      title: take('title', f['title'] as string | null, orig?.title)!,
+      company: take('company', f['company'] as string | null, orig?.company)!,
+      offerUrl: take('offerUrl', f['offerUrl'] as string | null, orig?.offerUrl),
+      companyUrl: take('companyUrl', f['companyUrl'] as string | null, orig?.companyUrl),
+      date: take('date', f['date'] as Date | null, orig?.date),
+      submitted: take('submitted', f['submitted'] as boolean | null, orig?.submitted),
+      status: take('status', f['status'] as JobOfferStatus | null, orig?.status),
+
+      // etapas siempre
+      selectionStages: stages,
+
+      // opcionales
+      location: take('location', f['location'] as string | null, orig?.location),
+      coverLetter: take('coverLetter', f['coverLetter'] as string | null, orig?.coverLetter),
+      description: take('description', f['description'] as string | null, orig?.description),
+      schedule: take('schedule', f['schedule'] as JobScheduleType | null, orig?.schedule),
+      contractType: take('contractType', f['contractType'] as JobContractType | null, orig?.contractType),
+      companySalary: take('companySalary', f['companySalary'] as string | null, orig?.companySalary),
+      desiredSalary: take('desiredSalary', f['desiredSalary'] as string | null, orig?.desiredSalary),
+      personalObjective: take('personalObjective', f['personalObjective'] as string | null, orig?.personalObjective),
     };
 
-
     if (this.isEditMode()) {
-      if (this.offerId) {
-
-        this.offersService.editOffer(this.offerId, offer);
-        this.snackBarService.show("Oferta actualizada con éxito", "success");
-      } else {
-        this.snackBarService.show("No se encontró el ID de la oferta", "error");
-        return;
-      }
+      if (!this.offerId) { this.snack.show('No se encontró el ID de la oferta', 'error'); return; }
+      this.offers.editOffer(this.offerId, offer);
+      this.snack.show('Oferta actualizada con éxito', 'success');
     } else {
-      this.offersService.addOffer(offer);
-      this.snackBarService.show("Oferta guardada con éxito", "success");
+      this.offers.addOffer(offer);
+      this.snack.show('Oferta guardada con éxito', 'success');
     }
-    this.router.navigate(["/offers"])
+    this.router.navigate(['/offers']);
   }
 
   backToOffers() {
-    this.offerForm.reset()
-    this.router.navigate(["/offers"])
+    this.offerForm().reset();
+    this.router.navigate(['/offers']);
   }
 }

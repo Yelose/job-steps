@@ -9,13 +9,17 @@ html {
   @include mat.core(); // Required for component base styles
 
   // Apply Material theme using prebuilt palettes
-  @include mat.theme((color: (primary: mat.$azure-palette,
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
         secondary: mat.$magenta-palette,
         tertiary: mat.$violet-palette,
       ),
       typography: Roboto,
       density: 0,
-    ));
+    )
+  );
 }
 
 // Ensure full height layout
@@ -43,7 +47,6 @@ h2 {
   font-weight: 200;
 }
 
-
 /* You can add global styles to this file, and also import other style files */
 
 * {
@@ -57,29 +60,44 @@ body {
 }
 
 .snackbar-success {
-  @include mat.snack-bar-overrides((container-color: rgb(33, 75, 14),
+  @include mat.snack-bar-overrides(
+    (
+      container-color: rgb(33, 75, 14),
       button-color: var(--mat-sys-primary),
-      supporting-text-color: var(--mat-sys-on-primary)));
+      supporting-text-color: var(--mat-sys-on-primary),
+    )
+  );
 }
 
 .snackbar-error {
-  @include mat.snack-bar-overrides((container-color: var(--mat-sys-error),
+  @include mat.snack-bar-overrides(
+    (
+      container-color: var(--mat-sys-error),
       button-color: var(--mat-sys-on-error),
-      supporting-text-color: var(--mat-sys-on-error)));
+      supporting-text-color: var(--mat-sys-on-error),
+    )
+  );
 }
 
 .snackbar-info {
-  @include mat.snack-bar-overrides((container-color: var(--mat-sys-secondary),
+  @include mat.snack-bar-overrides(
+    (
+      container-color: var(--mat-sys-secondary),
       button-color: var(--mat-sys-on-secondary),
-      supporting-text-color: var(--mat-sys-on-secondary)));
+      supporting-text-color: var(--mat-sys-on-secondary),
+    )
+  );
 }
 
 mat-card {
   overflow: hidden;
 
-  @include mat.card-overrides((elevated-container-color: var(--mat-sys-tertiary-fixed-dim),
+  @include mat.card-overrides(
+    (
+      elevated-container-color: var(--mat-sys-tertiary-fixed-dim),
       elevated-container-elevation: var(--mat-sys-level3),
-    ));
+    )
+  );
 
   mat-card-header {
     color: var(--mat-sys-on-tertiary-fixed-dim);
@@ -91,11 +109,77 @@ mat-card {
 }
 
 .delete {
-  @include mat.icon-overrides((color: var(--mat-sys-error),
-    ));
-  @include mat.button-overrides((filled-container-color: var(--mat-sys-error)));
+  @include mat.icon-overrides(
+    (
+      color: var(--mat-sys-error),
+    )
+  );
+  @include mat.button-overrides(
+    (
+      filled-container-color: var(--mat-sys-error),
+    )
+  );
 }
 
 .submit {
-  color: green
+  color: green;
+}
+
+/* ====== ESTILO BASE ====== */
+mat-slide-toggle {
+  @include mat.slide-toggle-overrides(
+    (
+      /* Etiqueta */ label-text-color: var(--mat-sys-on-tertiary-fixed),
+      /* === ON (seleccionado) ===
+           Track/barrita = on-primary.
+           Handle = primary. Iconos explícitos. */
+        selected-track-color: var(--mat-sys-on-primary),
+      selected-handle-color: var(--mat-sys-primary),
+      selected-icon-color: var(--mat-sys-on-primary),
+      /* Sin azules en estados */ selected-hover-track-color:
+        var(--mat-sys-on-primary),
+      selected-hover-handle-color: var(--mat-sys-primary),
+      selected-pressed-track-color: var(--mat-sys-on-primary),
+      selected-pressed-handle-color: var(--mat-sys-primary),
+      selected-focus-track-color: var(--mat-sys-on-primary),
+      selected-focus-handle-color: var(--mat-sys-tertiary),
+      selected-hover-state-layer-color: var(--mat-sys-tertiary),
+      selected-hover-state-layer-opacity: 0.08,
+      selected-pressed-state-layer-color: var(--mat-sys-tertiary),
+      selected-pressed-state-layer-opacity: 0.12,
+      selected-focus-state-layer-color: var(--mat-sys-tertiary),
+      selected-focus-state-layer-opacity: 0.12,
+
+      /* === OFF (no seleccionado):  */ unselected-track-color:
+        var(--mat-sys-on-error),
+      unselected-handle-color: var(--mat-sys-error),
+      unselected-icon-color: var(--mat-sys-on-error),
+      unselected-hover-track-color: var(--mat-sys-on-error),
+      unselected-hover-handle-color: var(--mat-sys-error),
+      unselected-pressed-track-color: var(--mat-sys-on-error),
+      unselected-pressed-handle-color: var(--mat-sys-error),
+      unselected-focus-track-color: var(--mat-sys-on-error),
+      unselected-focus-handle-color: var(--mat-sys-error),
+      unselected-hover-state-layer-color: var(--mat-sys-error),
+      unselected-hover-state-layer-opacity: 0.08,
+      unselected-pressed-state-layer-color: var(--mat-sys-error),
+      unselected-pressed-state-layer-opacity: 0.12,
+      unselected-focus-state-layer-color: var(--mat-sys-error),
+      unselected-focus-state-layer-opacity: 0.12,
+
+      /* Disabled */ disabled-label-text-color: var(--mat-sys-on-tertiary-fixed),
+      disabled-selected-track-color: var(--mat-sys-on-primary),
+      disabled-selected-handle-color: var(--mat-sys-primary),
+      disabled-selected-icon-color: var(--mat-sys-on-primary),
+      disabled-unselected-track-color: var(--mat-sys-on-error),
+      disabled-unselected-track-outline-color: var(--mat-sys-on-tertiary-fixed),
+      disabled-unselected-handle-color: var(--mat-sys-error),
+      disabled-unselected-icon-color: var(--mat-sys-on-error),
+      /* Outline + “burbuja” blanca visible */ track-outline-color:
+        var(--mat-sys-on-tertiary),
+      handle-surface-color: #fff,
+      handle-elevation-shadow: none,
+      disabled-handle-elevation-shadow: none
+    )
+  );
 }

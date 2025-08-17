@@ -5,37 +5,36 @@ import { JobOfferStatus } from './job-offer-status';
 import { JobScheduleType } from './job-schedule-model';
 
 export class JobOfferDisplayModel implements JobOfferInterface {
-    id!: string;
-    title!: string;
-    company!: string;
-    offerUrl!: string;
-    companyUrl!: string;
-    date!: Date;
-    submitted!: boolean;
-    selectionStages!: StageModel[];
-    status!: JobOfferStatus;
+  id!: string;
+  title!: string;
+  company!: string;
+  selectionStages!: StageModel[];
 
-    location?: string;
-    coverLetter?: string;
-    description?: string;
-    schedule?: JobScheduleType;
-    contractType?: JobContractType;
-    companySalary?: string;
-    desiredSalary?: string;
-    personalObjective?: string;
+  // ahora con defaults seguros
+  offerUrl?: string;
+  companyUrl?: string;
+  date?: Date | null = null;
+  submitted?: boolean = false;
+  status?: JobOfferStatus = 'pending';
 
-    // Campos derivados
-    formattedCoverLetter: string[];
-    formattedObjective: string[];
-    formattedOfferDescription: string[];
+  location?: string;
+  coverLetter?: string;
+  description?: string;
+  schedule?: JobScheduleType | null;
+  contractType?: JobContractType | null;
+  companySalary?: string;
+  desiredSalary?: string;
+  personalObjective?: string;
 
-    constructor(
-        base: JobOfferInterface,
-        toLineArray: (text: string) => string[]
-    ) {
-        Object.assign(this, base);
-        this.formattedCoverLetter = toLineArray(base.coverLetter ?? '');
-        this.formattedObjective = toLineArray(base.personalObjective ?? '');
-        this.formattedOfferDescription = toLineArray(base.description ?? '');
-    }
+  // derivados para tu vista
+  formattedCoverLetter: string[];
+  formattedObjective: string[];
+  formattedOfferDescription: string[];
+
+  constructor(base: JobOfferInterface, toLineArray: (text: string) => string[]) {
+    Object.assign(this, base);
+    this.formattedCoverLetter = toLineArray(base.coverLetter ?? '');
+    this.formattedObjective = toLineArray(base.personalObjective ?? '');
+    this.formattedOfferDescription = toLineArray(base.description ?? '');
+  }
 }

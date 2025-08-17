@@ -1,32 +1,74 @@
 <header>
-    <h1>Organiza tu búsqueda de empleo y mejora tus oportunidades</h1>
-    <h2>Lleva el control de tus candidaturas, etapas de selección, respuestas y rechazos. Descubre tus patrones y toma
-        mejores decisiones.</h2>
+  <h1>Organiza tu búsqueda de empleo y mejora tus oportunidades</h1>
+  <h2>
+    Lleva el control de tus candidaturas, etapas de selección, respuestas y
+    rechazos. Descubre tus patrones y toma mejores decisiones.
+  </h2>
 </header>
 
 <main>
-    @for(card of utilities; track card){
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title> {{card.title}} </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <mat-icon>{{card.icon}}</mat-icon>
-            <p>{{card.sub1}}</p>
-            <p>{{card.sub2}}</p>
-        </mat-card-content>
-    </mat-card>
-    }
+  @for(card of utilities; track card){
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title> {{ card.title }} </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-icon>{{ card.icon }}</mat-icon>
+      <p>{{ card.sub1 }}</p>
+      <p>{{ card.sub2 }}</p>
+    </mat-card-content>
+  </mat-card>
+  }
 
+  <section class="about-app">
+    <h2>Sobre Job Steps</h2>
+    <p>
+      He creado Job Steps para organizar mi propia búsqueda de empleo. Mientras
+      enviaba candidaturas, sentía la necesidad de una herramienta clara y
+      flexible que me ayudara a llevar un seguimiento de cada oferta y sus
+      etapas.
+    </p>
+    <p>
+      Por eso he desarrollado esta aplicación <strong>gratuita</strong> y
+      <strong>sin anuncios</strong>, con la intención de que no solo me sirva a
+      mí, sino que pueda ser útil también para otras personas que estén en la
+      misma situación.
+    </p>
+    <p>
+      El código de este proyecto es <strong>público</strong>, porque quiero
+      mostrar cómo trabajo con Angular y Firebase, y me encantaría que las
+      empresas pudieran valorar mi perfil a través de un ejemplo real y
+      funcional de lo que sé hacer.
+    </p>
+  </section>
+
+  @for(card of utilities2; track card){
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title> {{ card.title }} </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-icon>{{ card.icon }}</mat-icon>
+      <p>{{ card.sub1 }}</p>
+      <p>{{ card.sub2 }}</p>
+    </mat-card-content>
+  </mat-card>
+  }
 </main>
-@if(!loggedIn()){
+
 <footer>
-    <div>
-        <button matButton="tonal" routerLink="register">Registrarse</button>
-        <button matButton="filled" routerLink="login">Iniciar sesión</button>
-    </div>
-    <cite>
-        Empieza gratis. Tu búsqueda de empleo merece una herramienta a la altura.
-    </cite>
+  @if(!loggedIn()){
+  <div>
+    <button matButton="tonal" routerLink="register">Registrarse</button>
+    <button matButton="filled" routerLink="login">Iniciar sesión</button>
+  </div>
+  <cite>
+    Empieza gratis. Tu búsqueda de empleo merece una herramienta a la altura.
+  </cite>
+  }
+  <cite>
+    Job Steps es mi forma de transformar la experiencia de buscar trabajo en
+    algo más claro y llevadero. Espero que te inspire a seguir adelante con
+    confianza.
+  </cite>
 </footer>
-}
