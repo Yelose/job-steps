@@ -10,11 +10,12 @@ import { ConfirmDialogService } from '../../../shared/services/confirm-dialog-se
 import { SnackbarService } from '../../../shared/services/snackbar-service';
 import { DateConvertionService } from '../../../shared/utils/date-convertion-service';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-offers',
   imports: [CommonModule, RouterLink, MatTableModule, MatPaginatorModule, MatIconModule,
-    MatButtonModule, MatTooltipModule],
+    MatButtonModule, MatTooltipModule, MatMenuModule],
   templateUrl: './offers.html',
   styleUrl: './offers.scss'
 })
@@ -26,7 +27,7 @@ export class Offers {
 
   offers = this.offersService.offersSignal
 
-  readonly displayedColumns = ['title', 'company', 'date', 'submitted', 'actions'];
+  readonly displayedColumns = ['title', 'company', 'actions'];
 
   formatDate(date: Date | string) {
     return this.toDate.toShortDate(date)

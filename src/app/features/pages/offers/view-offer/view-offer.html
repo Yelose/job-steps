@@ -14,47 +14,49 @@
             </h2>
         </a>
         <p>
-            <span><mat-icon>event</mat-icon> {{ toShortDate(offer()!.date) }}</span>
-            <span><mat-icon>location_on</mat-icon>{{ offer()!.location || 'No especificada' }} </span>
+            @let d = offer()?.date;
+            @if (d) {
+            <span><mat-icon>event</mat-icon> {{ toShortDate(d) }}</span>
+            } <span><mat-icon>location_on</mat-icon>{{ offer()?.location || 'No especificada' }} </span>
         </p>
     </header>
     <mat-divider></mat-divider>
     <main>
         <mat-chip-set aria-label="Dog selection">
-            @let status = getStatusModel(offer()!.status);
+            @let status = getStatusModel(offer()?.status ?? 'pending');
             @if (status) {
 
             <mat-chip variant="outlined">
-                <mat-icon matChipAvatar>{{ status.icon }}</mat-icon>
-                {{ status.label }}
+                <mat-icon matChipAvatar>{{ status?.icon }}</mat-icon>
+                {{ status?.label }}
             </mat-chip>
             }
 
-            @if (offer()!.schedule){
+            @if (offer()?.schedule){
             <mat-chip>
                 <mat-icon matChipAvatar>schedule</mat-icon>
-                {{ offer()!.schedule }}
+                {{ offer()?.schedule }}
             </mat-chip>
             }
 
-            @if (offer()!.contractType) {
+            @if (offer()?.contractType) {
             <mat-chip variant="outlined">
                 <mat-icon matChipAvatar>description</mat-icon>
-                {{ offer()!.contractType }}
+                {{ offer()?.contractType }}
             </mat-chip>
             }
 
-            @if (offer()!.companySalary) {
+            @if (offer()?.companySalary) {
             <mat-chip>
                 <mat-icon matChipAvatar>payments</mat-icon>
-                {{ offer()!.companySalary }}
+                {{ offer()?.companySalary }}
             </mat-chip>
             }
 
-            @if (offer()!.desiredSalary) {
+            @if (offer()?.desiredSalary) {
             <mat-chip>
                 <mat-icon matChipAvatar>euro</mat-icon>
-                {{ offer()!.desiredSalary }}
+                {{ offer()?.desiredSalary }}
             </mat-chip>
             }
 

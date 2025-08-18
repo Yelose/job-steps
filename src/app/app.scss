@@ -5,14 +5,12 @@
   flex-direction: column;
   height: 100dvh;
   width: 100%;
-  overflow: hidden;
 
 
   main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
 
     section {
       height: 100%;

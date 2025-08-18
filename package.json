@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration production",
+    "deploy": "npm run build && firebase deploy --only hosting:job-steps",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:job-steps": "node dist/job-steps/server/server.mjs"

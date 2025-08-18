@@ -7,11 +7,14 @@ main {
   overflow: hidden;
   justify-content: center;
   align-items: center;
-  gap: 2vh;
+  gap: 4vh;
+  padding: 5vh 0;
+
   header {
     padding: 1dvh;
     text-align: center;
   }
+
   section {
     display: flex;
     flex-direction: column;
@@ -20,12 +23,15 @@ main {
     width: fit-content;
     background-color: var(--mat-sys-tertiary-fixed);
     color: var(--mat-sys-on-tertiary-fixed);
-    box-shadow: var(--mat-sys-level1);
+    box-shadow: var(--mat-sys-level2);
+    border-radius: 7px;
+
     article {
       display: flex;
       gap: calc(1vw + 5px);
       align-items: center;
     }
+
     em {
       flex: 1;
       text-align: right;
@@ -33,22 +39,21 @@ main {
       color: var(--mat-sys-primary);
       font-style: normal;
     }
+
     mat-slide-toggle {
       font-weight: 100;
     }
+
     mat-slide-toggle {
-      @include mat.slide-toggle-overrides(
-        (
-          label-text-weight: 100,
-        )
-      );
+      @include mat.slide-toggle-overrides((label-text-weight: 100,
+        ));
     }
+
     /* ====== VARIANTE .accent (tu segundo toggle) ====== */
     mat-slide-toggle.accent {
-      @include mat.slide-toggle-overrides(
-        (
-          label-text-color: var(--mat-sys-on-tertiary-fixed),
-          /* ON en fixed */ selected-track-color: var(--mat-sys-on-primary),
+      @include mat.slide-toggle-overrides((label-text-color: var(--mat-sys-on-tertiary-fixed),
+          /* ON en fixed */
+          selected-track-color: var(--mat-sys-on-primary),
           selected-handle-color: var(--mat-sys-primary-fixed),
           selected-icon-color: var(--mat-sys-on-primary-fixed),
           selected-hover-track-color: var(--mat-sys-on-primary),
@@ -69,8 +74,13 @@ main {
           disabled-unselected-handle-color: var(--mat-sys-error),
           disabled-unselected-icon-color: var(--mat-sys-on-error),
           track-outline-color: var(--mat-sys-on-tertiary),
-        )
-      );
+        ));
     }
+  }
+
+  footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
   }
 }
