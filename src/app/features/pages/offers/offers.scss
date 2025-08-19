@@ -23,13 +23,6 @@ main {
   }
 }
 
-.edit {
-  color: var(--mat-sys-tertiary);
-}
-
-.eye {
-  color: var(--mat-sys-primary);
-}
 
 th[mat-header-cell] {
   background-color: var(--mat-sys-tertiary-fixed);
@@ -38,7 +31,8 @@ th[mat-header-cell] {
   font-size: larger;
 }
 
-.actions {
-  display: flex;
-  flex-wrap: nowrap;
+mat-menu {
+  mat-button {
+    color: var(--mat-sys-primary)
+  }
 }

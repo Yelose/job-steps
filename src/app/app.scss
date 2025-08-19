@@ -13,11 +13,12 @@
     top: 0;
   }
 
-  main {
+  >main {
     display: flex;
     flex: 1;
     flex-direction: column;
     min-height: 0;
+    height: 100%;
 
     section {
       display: flex;
@@ -25,6 +26,7 @@
       height: 100%;
 
       mat-sidenav-container {
+        height: 100%;
         @include mat.sidenav-overrides((container-background-color: var(--mat-sys-secondary-container),
             container-text-color: var(--mat-sys-on-secondary-container),
             container-elevation-shadow: var(--mat-sys-level2),
@@ -34,8 +36,8 @@
           display: flex;
           flex-direction: column;
           width: 300px;
-          height: 85dvh;
-          align-self: center;
+          height: calc(100dvh - 60px);
+          align-self: bottom;
           box-shadow: var(--mat-sys-level4);
 
           mat-nav-list {
@@ -51,9 +53,15 @@
 
         mat-sidenav-content {
           height: 100%;
+          display: flex;
+          flex-direction: column;
           flex: 1;
           overflow-y: auto;
           box-sizing: border-box;
+
+          main {
+            flex: 1;
+          }
         }
       }
     }

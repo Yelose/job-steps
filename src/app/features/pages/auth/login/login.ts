@@ -43,7 +43,8 @@ export class Login {
       this.authService.login(email as string, password as string).subscribe({
         next: () => {
           this.snackbarService.show("Se ha iniciado sesión correctamente", "success");
-          this.router.navigate(['dashboard']);
+          const redirect = this.router.parseUrl(this.router.url).queryParams?.['redirect'];
+          this.router.navigateByUrl(redirect || '/offers');
         },
         error: () => {
           this.snackbarService.show("Usuario o contraseña incorrectos", "error");

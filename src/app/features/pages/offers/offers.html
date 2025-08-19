@@ -46,17 +46,17 @@
                 </button>
                 <mat-menu #actions="matMenu">
                     <button mat-menu-item [routerLink]="['/edit-offer', offer.id]" matTooltip="Editar">
-                        <mat-icon class="edit">edit</mat-icon>
+                        <mat-icon>edit</mat-icon>
                         <span>Editar</span>
                     </button>
 
                     <button mat-menu-item (click)="delete(offer.id)" matToolTip="Borrar">
-                        <mat-icon class="delete">delete</mat-icon>
+                        <mat-icon>delete</mat-icon>
                         <span>Borrar</span>
                     </button>
 
                     <button mat-menu-item [routerLink]="['/view-offer', offer.id]" matTooltip="Ver oferta">
-                        <mat-icon class="eye">visibility</mat-icon>
+                        <mat-icon>visibility</mat-icon>
                         <span>Ver</span>
                     </button>
                 </mat-menu>

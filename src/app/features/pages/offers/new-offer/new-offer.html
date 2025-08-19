@@ -1,7 +1,10 @@
+<h1>Nueva oferta de empleo</h1>
 <form [formGroup]="offerForm()">
   @if (showBasic()){
   <section>
-    <header><h2>Datos básicos de la oferta</h2></header>
+    <header>
+      <h2>Datos básicos de la oferta</h2>
+    </header>
     <main>
       @if (formCfg().visible.title) {
       <mat-form-field appearance="outline">
@@ -32,10 +35,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Fecha</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="date" />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="picker"
-        ></mat-datepicker-toggle>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       } @if (formCfg().visible.coverLetter) {
@@ -44,15 +44,15 @@
         <textarea matInput rows="4" formControlName="coverLetter"></textarea>
       </mat-form-field>
       } @if (formCfg().visible.submitted) {
-      <mat-slide-toggle formControlName="submitted"
-        >Enviada candidatura</mat-slide-toggle
-      >
+      <mat-slide-toggle formControlName="submitted">Enviada candidatura</mat-slide-toggle>
       }
     </main>
   </section>
   } @if(showInfo()){
   <section>
-    <header><h2>Información de la oferta</h2></header>
+    <header>
+      <h2>Información de la oferta</h2>
+    </header>
     <main>
       @if (formCfg().visible.description) {
       <mat-form-field appearance="outline" class="full">
@@ -105,38 +105,24 @@
   }
 
   <section class="stages">
-    <header><h2>Etapas del proceso de selección</h2></header>
+    <header>
+      <h2>Etapas del proceso de selección</h2>
+    </header>
     <main>
       <div>
         <mat-form-field appearance="outline">
           <mat-label>Nombre de la etapa</mat-label>
-          <input
-            matInput
-            formControlName="newStageName"
-            (keydown.enter)="addStage()"
-          />
+          <input matInput formControlName="newStageName" (keydown.enter)="addStage()" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Fecha de la etapa (opcional)</mat-label>
-          <input
-            matInput
-            [matDatepicker]="newStageDatePicker"
-            formControlName="newStageDate"
-          />
-          <mat-datepicker-toggle
-            matIconSuffix
-            [for]="newStageDatePicker"
-          ></mat-datepicker-toggle>
+          <input matInput [matDatepicker]="newStageDatePicker" formControlName="newStageDate" />
+          <mat-datepicker-toggle matIconSuffix [for]="newStageDatePicker"></mat-datepicker-toggle>
           <mat-datepicker #newStageDatePicker></mat-datepicker>
         </mat-form-field>
 
-        <button
-          matButton="filled"
-          type="button"
-          [disabled]="!newStageNameText.trim().length"
-          (click)="addStage()"
-        >
+        <button matButton="filled" type="button" [disabled]="!newStageNameText.trim().length" (click)="addStage()">
           Añadir etapa
         </button>
       </div>
@@ -145,22 +131,13 @@
         @for (stage of selectionStagesFA.controls; track stage; let i = $index)
         {
         <div [formGroupName]="i">
-          <mat-checkbox formControlName="completed"
-            >Etapa completada</mat-checkbox
-          >
+          <mat-checkbox formControlName="completed">Etapa completada</mat-checkbox>
           <span>{{ stage.value.name }}</span>
 
           <mat-form-field appearance="outline">
             <mat-label>Fecha de la etapa</mat-label>
-            <input
-              matInput
-              [matDatepicker]="sharedPicker"
-              formControlName="date"
-            />
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="sharedPicker"
-            ></mat-datepicker-toggle>
+            <input matInput [matDatepicker]="sharedPicker" formControlName="date" />
+            <mat-datepicker-toggle matIconSuffix [for]="sharedPicker"></mat-datepicker-toggle>
             <mat-datepicker #sharedPicker></mat-datepicker>
           </mat-form-field>
 
@@ -175,16 +152,14 @@
   @if (showObjective()){
 
   <section>
-    <header><h2>Objetivo personal con esta empresa</h2></header>
+    <header>
+      <h2>Objetivo personal con esta empresa</h2>
+    </header>
     <main>
       @if (formCfg().visible.personalObjective) {
       <mat-form-field appearance="outline" class="full">
         <mat-label>Reflexión personal sobre la empresa</mat-label>
-        <textarea
-          matInput
-          rows="5"
-          formControlName="personalObjective"
-        ></textarea>
+        <textarea matInput rows="5" formControlName="personalObjective"></textarea>
       </mat-form-field>
       }
     </main>
@@ -192,20 +167,17 @@
   }
 
   <section class="submit-container">
-    <header><h2>Enviar formulario</h2></header>
+    <header>
+      <h2>Enviar formulario</h2>
+    </header>
     <main class="submit-buttons-container">
       <button matButton="filled" type="button" (click)="submit()">
         Guardar Oferta
       </button>
-      <button matButton="tonal" type="button" (click)="backToOffers()">
+      <button matButton="elevated" type="button" (click)="backToOffers()">
         Volver a ofertas
       </button>
-      <button
-        matButton="filled"
-        type="button"
-        class="delete"
-        (click)="resetForm()"
-      >
+      <button matButton="filled" type="button" class="delete" (click)="resetForm()">
         Borrar formulario
       </button>
     </main>
