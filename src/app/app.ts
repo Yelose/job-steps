@@ -9,11 +9,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from './core/services/auth-service';
 import { SnackbarService } from './shared/services/snackbar-service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { LoadingService } from './shared/services/loading-service';
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, RouterLink, MainToolbar, Footer, MatSidenavModule, MatListModule,
-    MatButtonModule, MatIconModule],
+    MatButtonModule, MatIconModule, MatProgressSpinnerModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
@@ -23,6 +25,12 @@ export class App {
   private drawerService = inject(DrawerService);
   private snackbarService = inject(SnackbarService)
   private router = inject(Router)
+  private loader = inject(LoadingService)
+
+  get loading(): boolean {
+    return this.loader.isLoading();
+  }
+
 
   drawerOpen = this.drawerService.isDrawerOpen
   readonly loggedIn = computed(() => !!this.authService.currentUser());

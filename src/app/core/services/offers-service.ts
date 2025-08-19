@@ -5,6 +5,7 @@ import { JobOfferInterface } from '../models/job-offer-interface';
 import { DateConvertionService } from '../../shared/utils/date-convertion-service';
 import { JobOfferDisplayModel } from '../models/job-offer-display-model';
 import { TextFormattingService } from '../../shared/services/text-formatting-service';
+import { LoadingService } from '../../shared/services/loading-service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,7 @@ export class OffersService {
   private user = computed(() => this.authService.currentUser());
   private dateService = inject(DateConvertionService);
   private textFormatter = inject(TextFormattingService);
+  private loader = inject(LoadingService)
 
   private offersCollection = computed(() => {
     const user = this.authService.user;
@@ -26,14 +28,30 @@ export class OffersService {
   constructor() {
     effect((onCleanup) => {
       const col = this.offersCollection();
+
       if (!col) {
         this.offersSignal.set([]);
         return;
       }
 
-      const sub = collectionData(col, { idField: 'id' }).subscribe((data) => {
-        const parsed = (data as JobOfferInterface[]).map(offer => this.parseOffer(offer));
-        this.offersSignal.set(parsed);
+      // + NUEVO: mostramos loader al iniciar la suscripción
+      this.loader.show();
+
+      let first = true; // controla primera emisión
+      const sub = collectionData(col, { idField: 'id' }).subscribe({
+        next: (data) => {
+          const parsed = (data as JobOfferInterface[])
+            .map(offer => this.parseOffer(offer));
+          this.offersSignal.set(parsed);
+
+          if (first) {            //  ocultar solo una vez
+            this.loader.hide();
+            first = false;
+          }
+        },
+        error: () => {
+          this.loader.hide();     //  oculta en error
+        }
       });
 
       onCleanup(() => sub.unsubscribe());

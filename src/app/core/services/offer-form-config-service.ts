@@ -3,6 +3,7 @@ import { Firestore, doc, docData, setDoc } from '@angular/fire/firestore';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs/operators';
 import { ALL_FIELDS, DEFAULT_OFFER_FORM_CONFIG, OfferFieldId, OfferFormConfig } from '../models/offer-field-id';
+import { LoadingService } from '../../shared/services/loading-service';
 
 function allTrue(): Record<OfferFieldId, boolean> {
   return ALL_FIELDS.reduce((acc, k) => { acc[k] = true; return acc; }, {} as Record<OfferFieldId, boolean>);
@@ -14,6 +15,7 @@ function allTrue(): Record<OfferFieldId, boolean> {
 export class OfferFormConfigService {
   private firestore = inject(Firestore)
   private destroyRef = inject(DestroyRef)
+  private loader = inject(LoadingService)
 
   private readonly defaultConfig = DEFAULT_OFFER_FORM_CONFIG
 
@@ -63,6 +65,7 @@ export class OfferFormConfigService {
   /** Persistencia en Firestore */
   upsert(uid: string, cfg: OfferFormConfig) {
     const ref = this.configDoc(uid);
-    return setDoc(ref, cfg, { merge: true });     // Promise<void>
+    this.loader.show()
+    return setDoc(ref, cfg, { merge: true }).finally(() => this.loader.hide());     // Promise<void>
   }
 }
