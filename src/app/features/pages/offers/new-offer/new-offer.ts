@@ -204,29 +204,54 @@ export class NewOffer {
   // ===== envío =====
   submit() {
     const form = this.offerForm();
+    const cfg = this.formCfg();
+
+    if (this.isEffectivelyEmpty(form.value as Record<string, unknown>, cfg.visible)) {
+      this.snack.show('El formulario está vacío. Añade al menos un dato.', 'error');
+      return;
+    }
+
     if (form.invalid) {
       this.snack.show('Por favor, completa los campos obligatorios', 'error');
       return;
     }
 
-    const cfg = this.formCfg();
-    const vis = cfg.visible;
-    const f = form.value as Record<string, unknown>;
-    const orig = this.original();
+    const offer = this.buildOffer(form.value as Record<string, unknown>, cfg.visible);
+    this.persistOffer(offer);
+    this.router.navigate(['/offers']);
+  }
 
-    // si el campo es visible → tomamos valor del form (o el previo si edito)
-    // si NO es visible → preservamos valor previo (en creación será undefined)
+  /* ======================== Helpers privados ======================== */
+
+  private readonly fieldsToCheck: ReadonlyArray<OfferFieldId> = [
+    'title', 'company', 'offerUrl', 'companyUrl', 'date', 'submitted', 'status',
+    'location', 'coverLetter', 'description', 'schedule', 'contractType',
+    'companySalary', 'desiredSalary', 'personalObjective',
+  ] as const;
+
+  private isEffectivelyEmpty(f: Record<string, unknown>, visible: Record<OfferFieldId, boolean>): boolean {
+    const anyFieldHasValue = this.fieldsToCheck.some(k => visible[k] && this.hasValue(f[k]));
+    const anyStageHasValue = this.selectionStagesFA.controls.some(g => {
+      const name = g.get('name')?.value as string | null | undefined;
+      const completed = g.get('completed')?.value as boolean | null | undefined;
+      const date = g.get('date')?.value as Date | null | undefined;
+      return this.isNonEmptyString(name) || completed === true || date instanceof Date;
+    });
+    return !anyFieldHasValue && !anyStageHasValue;
+  }
+
+  private buildOffer(f: Record<string, unknown>, visible: Record<OfferFieldId, boolean>): Omit<JobOfferInterface, 'id'> {
+    const orig = this.original();
     const take = <T>(k: OfferFieldId, val: T | null | undefined, prev: T | undefined): T | undefined =>
-      vis[k] ? (val ?? prev) : prev;
+      visible[k] ? (val ?? prev) : prev;
 
     const stages = this.selectionStagesFA.controls.map(g => ({
       name: g.get('name')?.value ?? '',
       completed: g.get('completed')?.value ?? false,
-      date: g.get('date')?.value instanceof Date ? g.get('date')?.value : null
+      date: g.get('date')?.value instanceof Date ? g.get('date')?.value : null,
     }));
 
-    const offer: Omit<JobOfferInterface, 'id'> = {
-      // obligatorios lógicos del sistema (pero ahora opcionales en el modelo)
+    return {
       title: take('title', f['title'] as string | null, orig?.title)!,
       company: take('company', f['company'] as string | null, orig?.company)!,
       offerUrl: take('offerUrl', f['offerUrl'] as string | null, orig?.offerUrl),
@@ -235,10 +260,8 @@ export class NewOffer {
       submitted: take('submitted', f['submitted'] as boolean | null, orig?.submitted),
       status: take('status', f['status'] as JobOfferStatus | null, orig?.status),
 
-      // etapas siempre
       selectionStages: stages,
 
-      // opcionales
       location: take('location', f['location'] as string | null, orig?.location),
       coverLetter: take('coverLetter', f['coverLetter'] as string | null, orig?.coverLetter),
       description: take('description', f['description'] as string | null, orig?.description),
@@ -248,17 +271,37 @@ export class NewOffer {
       desiredSalary: take('desiredSalary', f['desiredSalary'] as string | null, orig?.desiredSalary),
       personalObjective: take('personalObjective', f['personalObjective'] as string | null, orig?.personalObjective),
     };
+  }
 
+  private persistOffer(offer: Omit<JobOfferInterface, 'id'>): void {
     if (this.isEditMode()) {
-      if (!this.offerId) { this.snack.show('No se encontró el ID de la oferta', 'error'); return; }
+      if (!this.offerId) {
+        this.snack.show('No se encontró el ID de la oferta', 'error');
+        return;
+      }
       this.offers.editOffer(this.offerId, offer);
       this.snack.show('Oferta actualizada con éxito', 'success');
     } else {
       this.offers.addOffer(offer);
       this.snack.show('Oferta guardada con éxito', 'success');
     }
-    this.router.navigate(['/offers']);
   }
+
+  /* ======================== Type guards simples ======================== */
+
+  private isNonEmptyString(v: unknown): v is string {
+    return typeof v === 'string' && v.trim().length > 0;
+  }
+
+  private hasValue(v: unknown): boolean {
+    return (
+      (typeof v === 'number' && !Number.isNaN(v)) ||
+      this.isNonEmptyString(v) ||
+      v === true ||
+      v instanceof Date
+    );
+  }
+
 
   backToOffers() {
     this.offerForm().reset();
