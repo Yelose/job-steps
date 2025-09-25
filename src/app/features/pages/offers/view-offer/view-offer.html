@@ -35,7 +35,17 @@
             @let d = offer()?.date;
             @if (d) {
             <span><mat-icon>event</mat-icon> {{ toShortDate(d) }}</span>
-            } <span><mat-icon>location_on</mat-icon>{{ offer()?.location || 'No especificada' }} </span>
+            }
+            <span>
+                <mat-icon>location_on</mat-icon>
+                @if (formattedLocation.href) {
+                <a [href]="formattedLocation.href" target="_blank" rel="noopener">
+                    {{ formattedLocation.label }}
+                </a>
+                } @else {
+                {{ formattedLocation.label || 'No especificada' }}
+                }
+            </span>
         </p>
     </header>
     <mat-divider></mat-divider>

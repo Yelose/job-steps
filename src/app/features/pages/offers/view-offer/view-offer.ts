@@ -11,6 +11,7 @@ import { JobOfferStatusModel } from '../../../../core/models/job-offer-status';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { LocationDisplay, LocationFormatService } from '../../../../shared/services/location-format-service';
 
 @Component({
   selector: 'app-view-offer',
@@ -25,6 +26,7 @@ export class ViewOffer {
   private offersService = inject(OffersService);
   private allOffers = this.offersService.offersSignal;
   private dateService = inject(DateConvertionService);
+  private locationFmt = inject(LocationFormatService);
 
   readonly offer = signal<JobOfferDisplayModel | null>(null);
   readonly panelOpenState = signal(false);
@@ -43,5 +45,9 @@ export class ViewOffer {
 
   getStatusModel(status: string): JobOfferStatusModel | undefined {
     return JobOfferStatusModel.getAll().find(s => s.value === status);
+  }
+
+  get formattedLocation(): LocationDisplay {
+    return this.locationFmt.parse(this.offer()?.location);
   }
 }
