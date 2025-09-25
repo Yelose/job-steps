@@ -9,16 +9,23 @@ import { RouterLink } from '@angular/router';
 import { ConfirmDialogService } from '../../../shared/services/confirm-dialog-service';
 import { SnackbarService } from '../../../shared/services/snackbar-service';
 import { DateConvertionService } from '../../../shared/utils/date-convertion-service';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import {
+  MAT_TOOLTIP_DEFAULT_OPTIONS,
+  MatTooltipModule,
+} from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
+import { myCustomTooltipDefaults } from '../../../shared/utils/tooltip-defualt-options';
+
 
 @Component({
   selector: 'app-offers',
+  providers: [{ provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: myCustomTooltipDefaults }],
   imports: [CommonModule, RouterLink, MatTableModule, MatPaginatorModule, MatIconModule,
     MatButtonModule, MatTooltipModule, MatMenuModule],
   templateUrl: './offers.html',
   styleUrl: './offers.scss'
 })
+
 export class Offers {
   private confirmDialog = inject(ConfirmDialogService)
   private snackBar = inject(SnackbarService)
@@ -42,5 +49,9 @@ export class Offers {
       }
     })
   }
+
+  addColumn() { }
+
+  removeColumn() { }
 
 }

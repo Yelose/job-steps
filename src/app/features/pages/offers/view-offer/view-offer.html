@@ -1,18 +1,36 @@
 @if (offer()) {
 <section>
     <header>
+        @if(offer()!.offerUrl){
         <a [href]="offer()!.offerUrl" target="_blank">
             <h1>
                 <mat-icon>work</mat-icon>
                 {{ offer()!.title }}
             </h1>
+        </a>} @else {
+        <a>
+            <h1>
+                <mat-icon>work</mat-icon>
+                {{ offer()!.title }}
+            </h1>
         </a>
+        }
+
+        @if(offer()!.companyUrl){
         <a [href]="offer()!.companyUrl" target="_blank">
             <h2>
                 <mat-icon>business</mat-icon>
                 {{offer()!.company}}
             </h2>
         </a>
+        } @else{
+        <a>
+            <h2>
+                <mat-icon>business</mat-icon>
+                {{offer()!.company}}
+            </h2>
+        </a>
+        }
         <p>
             @let d = offer()?.date;
             @if (d) {

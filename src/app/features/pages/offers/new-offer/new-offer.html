@@ -1,4 +1,4 @@
-<h1>Nueva oferta de empleo</h1>
+<h1>{{isEditMode() ? 'Editando oferta' : 'Nueva oferta de empleo'}}</h1>
 <form [formGroup]="offerForm()">
   @if (showBasic()){
   <section>
