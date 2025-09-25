@@ -3,7 +3,7 @@
         <h1>Perfil de usuario</h1>
     </mat-card-header>
     <mat-card-content>
-        <p><b>Nombre:</b> {{user()?.displayName}} || "Sin nombre"</p>
+        <p><b>Nombre:</b> {{user()?.displayName ? user()?.displayName : "Sin nombre"}}</p>
         <p><b>Email:</b> {{user()?.email}}</p>
         <p><strong>Ofertas enviadas:</strong> {{ submittedOffersCount() }}</p>
         <p><strong>Ofertas pendientes:</strong> {{ pendingOffersCount() }}</p>
