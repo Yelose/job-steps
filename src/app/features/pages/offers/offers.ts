@@ -34,7 +34,7 @@ export class Offers {
 
   offers = this.offersService.offersSignal
 
-  readonly displayedColumns = ['title', 'company', 'actions'];
+  readonly displayedColumns = ['company', 'title', 'actions'];
 
   formatDate(date: Date | string) {
     return this.toDate.toShortDate(date)

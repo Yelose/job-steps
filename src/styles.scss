@@ -117,15 +117,11 @@ mat-slide-toggle {
       /* === ON (seleccionado) ===
            Track/barrita = on-primary.
            Handle = primary. Iconos explícitos. */
-      selected-track-color: var(--mat-sys-on-primary),
       selected-handle-color: var(--mat-sys-primary),
       selected-icon-color: var(--mat-sys-on-primary),
       /* Sin azules en estados */
-      selected-hover-track-color: var(--mat-sys-on-primary),
       selected-hover-handle-color: var(--mat-sys-primary),
-      selected-pressed-track-color: var(--mat-sys-on-primary),
       selected-pressed-handle-color: var(--mat-sys-primary),
-      selected-focus-track-color: var(--mat-sys-on-primary),
       selected-focus-handle-color: var(--mat-sys-tertiary),
       selected-hover-state-layer-color: var(--mat-sys-tertiary),
       selected-hover-state-layer-opacity: 0.08,
@@ -135,14 +131,10 @@ mat-slide-toggle {
       selected-focus-state-layer-opacity: 0.12,
 
       /* === OFF (no seleccionado):  */
-      unselected-track-color: var(--mat-sys-on-error),
       unselected-handle-color: var(--mat-sys-error),
       unselected-icon-color: var(--mat-sys-on-error),
-      unselected-hover-track-color: var(--mat-sys-on-error),
       unselected-hover-handle-color: var(--mat-sys-error),
-      unselected-pressed-track-color: var(--mat-sys-on-error),
       unselected-pressed-handle-color: var(--mat-sys-error),
-      unselected-focus-track-color: var(--mat-sys-on-error),
       unselected-focus-handle-color: var(--mat-sys-error),
       unselected-hover-state-layer-color: var(--mat-sys-error),
       unselected-hover-state-layer-opacity: 0.08,
@@ -150,19 +142,14 @@ mat-slide-toggle {
       unselected-pressed-state-layer-opacity: 0.12,
       unselected-focus-state-layer-color: var(--mat-sys-error),
       unselected-focus-state-layer-opacity: 0.12,
-
       /* Disabled */
       disabled-label-text-color: var(--mat-sys-on-tertiary-fixed),
-      disabled-selected-track-color: var(--mat-sys-on-primary),
       disabled-selected-handle-color: var(--mat-sys-primary),
       disabled-selected-icon-color: var(--mat-sys-on-primary),
-      disabled-unselected-track-color: var(--mat-sys-on-error),
-      disabled-unselected-track-outline-color: var(--mat-sys-on-tertiary-fixed),
       disabled-unselected-handle-color: var(--mat-sys-error),
       disabled-unselected-icon-color: var(--mat-sys-on-error),
       /* Outline + “burbuja” blanca visible */
-      track-outline-color: var(--mat-sys-on-tertiary),
       handle-surface-color: #fff,
-      handle-elevation-shadow: none,
-      disabled-handle-elevation-shadow: none));
+      handle-elevation-shadow: var(--mat-sys-level3),
+      disabled-handle-elevation-shadow: var(--mat-sys-level3)));
 }

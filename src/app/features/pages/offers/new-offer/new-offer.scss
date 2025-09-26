@@ -21,8 +21,9 @@ form {
     display: flex;
     flex-direction: column;
     gap: 2vh;
-    background-color: var(--mat-sys-tertiary-fixed);
-    color: var(--mat-sys-on-tertiary-fixed);
+    background-color: white;
+    color: var(--mat-sys-on-secondary-fixed);
+
     header {
       text-align: center;
     }
