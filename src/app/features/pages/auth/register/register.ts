@@ -7,10 +7,11 @@ import { MatInputModule } from '@angular/material/input';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth-service';
 import { SnackbarService } from '../../../../shared/services/snackbar-service';
+import { TitleHeader } from '../../../../shared/components/title-header/title-header';
 
 @Component({
   selector: 'app-register',
-  imports: [MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule, ReactiveFormsModule],
+  imports: [TitleHeader, MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule, ReactiveFormsModule],
   templateUrl: './register.html',
   styleUrl: './register.scss'
 })

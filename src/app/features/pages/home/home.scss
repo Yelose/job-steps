@@ -1,6 +1,5 @@
 @use "@angular/material" as mat;
-
-$max-width: 1500px;
+@use "variables" as *;
 
 :host {
   display: flex;
@@ -22,7 +21,7 @@ main {
   padding: 2dvh 3dvw 6dvh;
   flex-wrap: wrap;
   margin: 0 auto;
-  max-width: $max-width;
+  max-width: $container-width;
 
   mat-card {
     display: flex;
@@ -46,11 +45,8 @@ main {
       background-color: white;
 
       mat-icon {
-        @include mat.icon-overrides(
-          (
-            color: var(--mat-sys-primary),
-          )
-        );
+        @include mat.icon-overrides((color: var(--mat-sys-primary),
+          ));
         width: 100%;
         height: fit-content;
         font-size: 46px;
@@ -61,6 +57,7 @@ main {
       }
     }
   }
+
   .about-app {
     display: flex;
     flex-direction: column;
@@ -76,8 +73,9 @@ footer {
   align-items: center;
   gap: 3vh;
   padding: 5vh 4vw;
-  max-width: $max-width;
+  max-width: $container-width;
   margin: 0 auto;
+
   div {
     display: flex;
     justify-content: center;

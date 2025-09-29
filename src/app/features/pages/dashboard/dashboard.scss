@@ -19,12 +19,15 @@ main {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    padding: calc(2vw + 5px);
+    padding: calc(4vw + 5px);
     width: fit-content;
-    background-color: var(--mat-sys-tertiary-fixed);
-    color: var(--mat-sys-on-tertiary-fixed);
-    box-shadow: var(--mat-sys-level2);
     border-radius: 7px;
+    border: 2px solid var(--mat-sys-primary);
+
+    h2 {
+      text-align: right;
+      padding-bottom: 2vh;
+    }
 
     article {
       display: flex;

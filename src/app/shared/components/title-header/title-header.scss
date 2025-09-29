@@ -1,0 +1,17 @@
+@use "@angular/material" as mat;
+@use "variables" as *;
+
+header {
+    max-width: $container-width;
+    margin: 0 auto;
+    background-color: var(--mat-sys-tertiary-fixed);
+
+
+    h1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 3vh;
+        color: var(--mat-on-sys-tertiary-fixed);
+    }
+}

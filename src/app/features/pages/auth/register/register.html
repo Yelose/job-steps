@@ -1,26 +1,19 @@
+<app-title-header title="Formulario de registro" />
+
+
 <div>
-  <h1>Formulario de registro</h1>
   <form [formGroup]="registerForm" (ngSubmit)="submit()">
     <section>
       <mat-form-field appearance="outline">
         <mat-label>Nombre de usuario</mat-label>
-        <input
-          matInput
-          placeholder="nombre de perfil"
-          formControlName="userName"
-        />
+        <input matInput placeholder="nombre de perfil" formControlName="userName" />
         @if(userName?.errors?.['required']){
         <mat-error>Campo obligatorio</mat-error>
         }
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Correo electrónico</mat-label>
-        <input
-          matInput
-          placeholder="tu email"
-          formControlName="email"
-          type="email"
-        />
+        <input matInput placeholder="tu email" formControlName="email" type="email" />
         @if (email?.errors?.['required']) {
         <mat-error>Campo obligatorio</mat-error>
         } @if (email?.errors?.['email']) {
@@ -31,24 +24,14 @@
     <section>
       <mat-form-field appearance="outline">
         <mat-label>Contraseña</mat-label>
-        <input
-          matInput
-          placeholder="introduce tu contraseña"
-          formControlName="password"
-          type="password"
-        />
+        <input matInput placeholder="introduce tu contraseña" formControlName="password" type="password" />
         @if (password?.errors?.['required']) {
         <mat-error>Contraseña obligatoria</mat-error>
         }
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Confirmar contraseña</mat-label>
-        <input
-          matInput
-          placeholder="confirma tu contraseña"
-          formControlName="confirmPassword"
-          type="password"
-        />
+        <input matInput placeholder="confirma tu contraseña" formControlName="confirmPassword" type="password" />
         @if(confirmPassword?.errors?.['required']){
         <mat-error>Es obligatorio confirmar la contraseña</mat-error>
         }

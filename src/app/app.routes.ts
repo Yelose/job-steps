@@ -14,6 +14,10 @@ export const routes: Routes = [
     { path: "statistics", canActivate: [authGuard], loadComponent: () => import("./features/pages/statistics/statistics").then(m => m.Statistics) },
     { path: "profile", canActivate: [authGuard], loadComponent: () => import("./features/pages/profile/profile").then(m => m.Profile) },
 
+    { path: "cookies", loadComponent: () => import("./features/pages/legal/cookies/cookies").then(m => m.Cookies) },
+    { path: "privacy", loadComponent: () => import("./features/pages/legal/privacy/privacy").then(m => m.Privacy) },
+    { path: "legal-policy", loadComponent: () => import("./features/pages/legal/legal-policy/legal-policy").then(m => m.LegalPolicy) },
+
     { path: "not-found", loadComponent: () => import("./features/pages/not-found/not-found").then(m => m.NotFound) },
     { path: "**", redirectTo: "not-found" },
 ];

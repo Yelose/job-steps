@@ -7,10 +7,11 @@ import { OfferFormConfigService } from '../../../core/services/offer-form-config
 import { DEFAULT_OFFER_FORM_CONFIG, OfferFieldId, OfferFormConfig } from '../../../core/models/offer-field-id';
 import { SnackbarService } from '../../../shared/services/snackbar-service';
 import { AuthService } from '../../../core/services/auth-service';
+import { TitleHeader } from '../../../shared/components/title-header/title-header';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [MatButtonModule, RouterLink, MatSlideToggleModule, MatCheckboxModule, MatButtonModule,],
+  imports: [TitleHeader, MatButtonModule, RouterLink, MatSlideToggleModule, MatCheckboxModule, MatButtonModule,],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })

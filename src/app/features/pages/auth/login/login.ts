@@ -7,10 +7,11 @@ import { FormControl, NonNullableFormBuilder, ReactiveFormsModule, Validators } 
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../core/services/auth-service';
 import { SnackbarService } from '../../../../shared/services/snackbar-service';
+import { TitleHeader } from '../../../../shared/components/title-header/title-header';
 
 @Component({
   selector: 'app-login',
-  imports: [MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule, ReactiveFormsModule, RouterLink],
+  imports: [TitleHeader, MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })
