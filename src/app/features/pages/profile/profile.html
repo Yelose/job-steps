@@ -1,12 +1,17 @@
-<mat-card>
-    <mat-card-header>
-        <h1>Perfil de usuario</h1>
-    </mat-card-header>
-    <mat-card-content>
-        <p><b>Nombre:</b> {{user()?.displayName ? user()?.displayName : "Sin nombre"}}</p>
-        <p><b>Email:</b> {{user()?.email}}</p>
-        <p><strong>Ofertas enviadas:</strong> {{ submittedOffersCount() }}</p>
-        <p><strong>Ofertas pendientes:</strong> {{ pendingOffersCount() }}</p>
-    </mat-card-content>
+<app-title-header title="Perfil de usuario" />
+<app-page-wrapper>
 
-</mat-card>
+    <mat-card>
+        <mat-card-header>
+            <h1>Datos de usuario</h1>
+        </mat-card-header>
+        <mat-card-content>
+            <p><b>Nombre:</b> {{user()?.displayName ? user()?.displayName : "Sin nombre"}}</p>
+            <p><b>Email:</b> {{user()?.email}}</p>
+            <p><strong>Ofertas enviadas:</strong> {{ submittedOffersCount() }}</p>
+            <p><strong>Ofertas pendientes:</strong> {{ pendingOffersCount() }}</p>
+        </mat-card-content>
+
+    </mat-card>
+
+</app-page-wrapper>

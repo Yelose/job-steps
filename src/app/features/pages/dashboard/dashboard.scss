@@ -1,4 +1,5 @@
 @use "@angular/material" as mat;
+@use "variables" as *;
 
 main {
   display: flex;
@@ -21,8 +22,8 @@ main {
     gap: 10px;
     padding: calc(4vw + 5px);
     width: fit-content;
-    border-radius: 7px;
-    border: 2px solid var(--mat-sys-primary);
+    border-radius: $radius;
+    border: $border;
 
     h2 {
       text-align: right;

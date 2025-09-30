@@ -1,0 +1,25 @@
+@use "@angular/material" as mat;
+
+
+article {
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+    padding: 4vh calc(2vw + 5px);
+
+}
+
+h2 {
+    margin-top: 1vh;
+    color: var(--mat-sys-tertiary);
+}
+
+li {
+    list-style-position: inside;
+    padding: 2px;
+}
+
+strong {
+    color: var(--mat-sys-primary);
+    font-weight: 400;
+}

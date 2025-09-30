@@ -1,149 +1,153 @@
 <app-title-header title="Panel de Control" />
 
-<main>
+<app-page-wrapper>
 
-  <section>
-    <h2>Formulario nueva oferta · Configuración</h2>
-    <!-- Campo: Título -->
-    <article>
-      <em>Título</em>
-      <mat-slide-toggle [checked]="!!cfg().visible['title']"
-        (change)="toggleVisible('title', $event.checked)">Visible</mat-slide-toggle>
-      <mat-slide-toggle [checked]="!!cfg().required['title']" (change)="toggleRequired('title', $event.checked)"
-        class="accent">Obligatorio</mat-slide-toggle>
-    </article>
+  <main>
 
-    <!-- Campo: Empresa -->
-    <article>
-      <em>Empresa</em>
-      <mat-slide-toggle [checked]="!!cfg().visible['company']"
-        (change)="toggleVisible('company', $event.checked)">Visible</mat-slide-toggle>
-      <mat-slide-toggle [checked]="!!cfg().required['company']" (change)="toggleRequired('company', $event.checked)"
-        class="accent">Obligatorio</mat-slide-toggle>
-    </article>
+    <section>
+      <h2>Formulario nueva oferta · Configuración</h2>
+      <!-- Campo: Título -->
+      <article>
+        <em>Título</em>
+        <mat-slide-toggle [checked]="!!cfg().visible['title']"
+          (change)="toggleVisible('title', $event.checked)">Visible</mat-slide-toggle>
+        <mat-slide-toggle [checked]="!!cfg().required['title']" (change)="toggleRequired('title', $event.checked)"
+          class="accent">Obligatorio</mat-slide-toggle>
+      </article>
 
-    <!-- Campo: Ubicación -->
-    <article>
-      <em>Ubicación</em>
-      <mat-slide-toggle [checked]="!!cfg().visible['location']"
-        (change)="toggleVisible('location', $event.checked)">Visible</mat-slide-toggle>
-      <mat-slide-toggle [checked]="!!cfg().required['location']" (change)="toggleRequired('location', $event.checked)"
-        class="accent">Obligatorio</mat-slide-toggle>
-    </article>
+      <!-- Campo: Empresa -->
+      <article>
+        <em>Empresa</em>
+        <mat-slide-toggle [checked]="!!cfg().visible['company']"
+          (change)="toggleVisible('company', $event.checked)">Visible</mat-slide-toggle>
+        <mat-slide-toggle [checked]="!!cfg().required['company']" (change)="toggleRequired('company', $event.checked)"
+          class="accent">Obligatorio</mat-slide-toggle>
+      </article>
 
-    <!-- Campo: Enlace oferta -->
-    <article>
-      <em>Enlace oferta</em>
-      <mat-slide-toggle [checked]="!!cfg().visible['offerUrl']"
-        (change)="toggleVisible('offerUrl', $event.checked)">Visible</mat-slide-toggle>
-      <mat-slide-toggle [checked]="!!cfg().required['offerUrl']" (change)="toggleRequired('offerUrl', $event.checked)"
-        class="accent">Obligatorio</mat-slide-toggle>
-    </article>
+      <!-- Campo: Ubicación -->
+      <article>
+        <em>Ubicación</em>
+        <mat-slide-toggle [checked]="!!cfg().visible['location']"
+          (change)="toggleVisible('location', $event.checked)">Visible</mat-slide-toggle>
+        <mat-slide-toggle [checked]="!!cfg().required['location']" (change)="toggleRequired('location', $event.checked)"
+          class="accent">Obligatorio</mat-slide-toggle>
+      </article>
 
-    <!-- Campo: Web empresa -->
-    <article>
-      <em>Web empresa</em>
-      <mat-slide-toggle [checked]="!!cfg().visible['companyUrl']"
-        (change)="toggleVisible('companyUrl', $event.checked)">Visible</mat-slide-toggle>
-      <mat-slide-toggle [checked]="!!cfg().required['companyUrl']"
-        (change)="toggleRequired('companyUrl', $event.checked)" class="accent">Obligatorio</mat-slide-toggle>
-    </article>
+      <!-- Campo: Enlace oferta -->
+      <article>
+        <em>Enlace oferta</em>
+        <mat-slide-toggle [checked]="!!cfg().visible['offerUrl']"
+          (change)="toggleVisible('offerUrl', $event.checked)">Visible</mat-slide-toggle>
+        <mat-slide-toggle [checked]="!!cfg().required['offerUrl']" (change)="toggleRequired('offerUrl', $event.checked)"
+          class="accent">Obligatorio</mat-slide-toggle>
+      </article>
 
-    <!-- Campo: Fecha -->
-    <article>
-      <em>Fecha</em>
-      <mat-slide-toggle [checked]="!!cfg().visible['date']"
-        (change)="toggleVisible('date', $event.checked)">Visible</mat-slide-toggle>
-      <mat-slide-toggle [checked]="!!cfg().required['date']" (change)="toggleRequired('date', $event.checked)"
-        class="accent">Obligatorio</mat-slide-toggle>
-    </article>
+      <!-- Campo: Web empresa -->
+      <article>
+        <em>Web empresa</em>
+        <mat-slide-toggle [checked]="!!cfg().visible['companyUrl']"
+          (change)="toggleVisible('companyUrl', $event.checked)">Visible</mat-slide-toggle>
+        <mat-slide-toggle [checked]="!!cfg().required['companyUrl']"
+          (change)="toggleRequired('companyUrl', $event.checked)" class="accent">Obligatorio</mat-slide-toggle>
+      </article>
 
-    <!-- Campo: Enviada -->
-    <article>
-      <em>Enviada</em>
-      <mat-slide-toggle [checked]="!!cfg().visible['submitted']"
-        (change)="toggleVisible('submitted', $event.checked)">Visible</mat-slide-toggle>
-      <mat-slide-toggle [checked]="!!cfg().required['submitted']" (change)="toggleRequired('submitted', $event.checked)"
-        class="accent">Obligatorio</mat-slide-toggle>
-    </article>
+      <!-- Campo: Fecha -->
+      <article>
+        <em>Fecha</em>
+        <mat-slide-toggle [checked]="!!cfg().visible['date']"
+          (change)="toggleVisible('date', $event.checked)">Visible</mat-slide-toggle>
+        <mat-slide-toggle [checked]="!!cfg().required['date']" (change)="toggleRequired('date', $event.checked)"
+          class="accent">Obligatorio</mat-slide-toggle>
+      </article>
 
-    <!-- Campo: Carta de presentación -->
-    <article>
-      <em>Carta de presentación</em>
-      <mat-slide-toggle [checked]="!!cfg().visible['coverLetter']"
-        (change)="toggleVisible('coverLetter', $event.checked)">Visible</mat-slide-toggle>
-      <mat-slide-toggle [checked]="!!cfg().required['coverLetter']"
-        (change)="toggleRequired('coverLetter', $event.checked)" class="accent">Obligatorio</mat-slide-toggle>
-    </article>
+      <!-- Campo: Enviada -->
+      <article>
+        <em>Enviada</em>
+        <mat-slide-toggle [checked]="!!cfg().visible['submitted']"
+          (change)="toggleVisible('submitted', $event.checked)">Visible</mat-slide-toggle>
+        <mat-slide-toggle [checked]="!!cfg().required['submitted']"
+          (change)="toggleRequired('submitted', $event.checked)" class="accent">Obligatorio</mat-slide-toggle>
+      </article>
 
-    <!-- Campo: Descripción -->
-    <article>
-      <em>Descripción</em>
-      <mat-slide-toggle [checked]="!!cfg().visible['description']"
-        (change)="toggleVisible('description', $event.checked)">Visible</mat-slide-toggle>
-      <mat-slide-toggle [checked]="!!cfg().required['description']"
-        (change)="toggleRequired('description', $event.checked)" class="accent">Obligatorio</mat-slide-toggle>
-    </article>
+      <!-- Campo: Carta de presentación -->
+      <article>
+        <em>Carta de presentación</em>
+        <mat-slide-toggle [checked]="!!cfg().visible['coverLetter']"
+          (change)="toggleVisible('coverLetter', $event.checked)">Visible</mat-slide-toggle>
+        <mat-slide-toggle [checked]="!!cfg().required['coverLetter']"
+          (change)="toggleRequired('coverLetter', $event.checked)" class="accent">Obligatorio</mat-slide-toggle>
+      </article>
 
-    <!-- Campo: Jornada -->
-    <article>
-      <em>Jornada</em>
-      <mat-slide-toggle [checked]="!!cfg().visible['schedule']"
-        (change)="toggleVisible('schedule', $event.checked)">Visible</mat-slide-toggle>
-      <mat-slide-toggle [checked]="!!cfg().required['schedule']" (change)="toggleRequired('schedule', $event.checked)"
-        class="accent">Obligatorio</mat-slide-toggle>
-    </article>
+      <!-- Campo: Descripción -->
+      <article>
+        <em>Descripción</em>
+        <mat-slide-toggle [checked]="!!cfg().visible['description']"
+          (change)="toggleVisible('description', $event.checked)">Visible</mat-slide-toggle>
+        <mat-slide-toggle [checked]="!!cfg().required['description']"
+          (change)="toggleRequired('description', $event.checked)" class="accent">Obligatorio</mat-slide-toggle>
+      </article>
 
-    <!-- Campo: Contrato -->
-    <article>
-      <em>Contrato</em>
-      <mat-slide-toggle [checked]="!!cfg().visible['contractType']"
-        (change)="toggleVisible('contractType', $event.checked)">Visible</mat-slide-toggle>
-      <mat-slide-toggle [checked]="!!cfg().required['contractType']"
-        (change)="toggleRequired('contractType', $event.checked)" class="accent">Obligatorio</mat-slide-toggle>
-    </article>
+      <!-- Campo: Jornada -->
+      <article>
+        <em>Jornada</em>
+        <mat-slide-toggle [checked]="!!cfg().visible['schedule']"
+          (change)="toggleVisible('schedule', $event.checked)">Visible</mat-slide-toggle>
+        <mat-slide-toggle [checked]="!!cfg().required['schedule']" (change)="toggleRequired('schedule', $event.checked)"
+          class="accent">Obligatorio</mat-slide-toggle>
+      </article>
 
-    <!-- Campo: Salario empresa -->
-    <article>
-      <em>Salario empresa</em>
-      <mat-slide-toggle [checked]="!!cfg().visible['companySalary']"
-        (change)="toggleVisible('companySalary', $event.checked)">Visible</mat-slide-toggle>
-      <mat-slide-toggle [checked]="!!cfg().required['companySalary']"
-        (change)="toggleRequired('companySalary', $event.checked)" class="accent">Obligatorio</mat-slide-toggle>
-    </article>
+      <!-- Campo: Contrato -->
+      <article>
+        <em>Contrato</em>
+        <mat-slide-toggle [checked]="!!cfg().visible['contractType']"
+          (change)="toggleVisible('contractType', $event.checked)">Visible</mat-slide-toggle>
+        <mat-slide-toggle [checked]="!!cfg().required['contractType']"
+          (change)="toggleRequired('contractType', $event.checked)" class="accent">Obligatorio</mat-slide-toggle>
+      </article>
 
-    <!-- Campo: Salario deseado -->
-    <article>
-      <em>Salario deseado</em>
-      <mat-slide-toggle [checked]="!!cfg().visible['desiredSalary']"
-        (change)="toggleVisible('desiredSalary', $event.checked)">Visible</mat-slide-toggle>
-      <mat-slide-toggle [checked]="!!cfg().required['desiredSalary']"
-        (change)="toggleRequired('desiredSalary', $event.checked)" class="accent">Obligatorio</mat-slide-toggle>
-    </article>
+      <!-- Campo: Salario empresa -->
+      <article>
+        <em>Salario empresa</em>
+        <mat-slide-toggle [checked]="!!cfg().visible['companySalary']"
+          (change)="toggleVisible('companySalary', $event.checked)">Visible</mat-slide-toggle>
+        <mat-slide-toggle [checked]="!!cfg().required['companySalary']"
+          (change)="toggleRequired('companySalary', $event.checked)" class="accent">Obligatorio</mat-slide-toggle>
+      </article>
 
-    <!-- Campo: Objetivo personal -->
-    <article>
-      <em>Objetivo personal</em>
-      <mat-slide-toggle [checked]="!!cfg().visible['personalObjective']"
-        (change)="toggleVisible('personalObjective', $event.checked)">Visible</mat-slide-toggle>
-      <mat-slide-toggle [checked]="!!cfg().required['personalObjective']"
-        (change)="toggleRequired('personalObjective', $event.checked)" class="accent">Obligatorio</mat-slide-toggle>
-    </article>
+      <!-- Campo: Salario deseado -->
+      <article>
+        <em>Salario deseado</em>
+        <mat-slide-toggle [checked]="!!cfg().visible['desiredSalary']"
+          (change)="toggleVisible('desiredSalary', $event.checked)">Visible</mat-slide-toggle>
+        <mat-slide-toggle [checked]="!!cfg().required['desiredSalary']"
+          (change)="toggleRequired('desiredSalary', $event.checked)" class="accent">Obligatorio</mat-slide-toggle>
+      </article>
 
-    <!-- Campo: Estado -->
-    <article>
-      <em>Estado</em>
-      <mat-slide-toggle [checked]="!!cfg().visible['status']"
-        (change)="toggleVisible('status', $event.checked)">Visible</mat-slide-toggle>
-      <mat-slide-toggle [checked]="!!cfg().required['status']" (change)="toggleRequired('status', $event.checked)"
-        class="accent">Obligatorio</mat-slide-toggle>
-    </article>
-  </section>
-  <footer>
-    <button matButton="filled" (click)="save()">Guardar configuración</button>
-    <button matButton="tonal" routerLink="/new-offer">
-      Nueva oferta de empleo
-    </button>
-    <button matButton="elevated" routerLink="/offers">Ver mis ofertas</button>
-  </footer>
-</main>
+      <!-- Campo: Objetivo personal -->
+      <article>
+        <em>Objetivo personal</em>
+        <mat-slide-toggle [checked]="!!cfg().visible['personalObjective']"
+          (change)="toggleVisible('personalObjective', $event.checked)">Visible</mat-slide-toggle>
+        <mat-slide-toggle [checked]="!!cfg().required['personalObjective']"
+          (change)="toggleRequired('personalObjective', $event.checked)" class="accent">Obligatorio</mat-slide-toggle>
+      </article>
+
+      <!-- Campo: Estado -->
+      <article>
+        <em>Estado</em>
+        <mat-slide-toggle [checked]="!!cfg().visible['status']"
+          (change)="toggleVisible('status', $event.checked)">Visible</mat-slide-toggle>
+        <mat-slide-toggle [checked]="!!cfg().required['status']" (change)="toggleRequired('status', $event.checked)"
+          class="accent">Obligatorio</mat-slide-toggle>
+      </article>
+    </section>
+    <footer>
+      <button matButton="filled" (click)="save()">Guardar configuración</button>
+      <button matButton="tonal" routerLink="/new-offer">
+        Nueva oferta de empleo
+      </button>
+      <button matButton="elevated" routerLink="/offers">Ver mis ofertas</button>
+    </footer>
+  </main>
+
+</app-page-wrapper>

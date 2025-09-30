@@ -1,27 +1,24 @@
 @use "@angular/material" as mat;
+@use "variables" as *;
 
-:host {
-  display: flex;
-  flex-direction: column;
+section {
   align-items: center;
   justify-content: center;
-  height: 100%;
-}
-
-div {
   display: flex;
   flex-direction: column;
   gap: 50px;
   padding: 4vh calc(6dvw - 5px);
-  box-shadow: 0px 0px 15px 2px gray;
-  border-radius: 7px;
-  background-color: var(--mat-sys-tertiary-fixed);
+  border-radius: $radius;
+  border: $border;
   text-align: center;
+  width: fit-content;
+  margin: 10vh auto;
 
   form {
     display: flex;
     flex-direction: column;
     gap: 35px;
+
     mat-form-field {
       flex: 1;
       min-width: 300px;

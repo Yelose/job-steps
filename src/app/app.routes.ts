@@ -13,6 +13,7 @@ export const routes: Routes = [
     { path: "view-offer/:id", canActivate: [authGuard], loadComponent: () => import("./features/pages/offers/view-offer/view-offer").then(m => m.ViewOffer) },
     { path: "statistics", canActivate: [authGuard], loadComponent: () => import("./features/pages/statistics/statistics").then(m => m.Statistics) },
     { path: "profile", canActivate: [authGuard], loadComponent: () => import("./features/pages/profile/profile").then(m => m.Profile) },
+    { path: "stages", canActivate: [authGuard], loadComponent: () => import("./features/pages/stages/stages").then(m => m.Stages) },
 
     { path: "cookies", loadComponent: () => import("./features/pages/legal/cookies/cookies").then(m => m.Cookies) },
     { path: "privacy", loadComponent: () => import("./features/pages/legal/privacy/privacy").then(m => m.Privacy) },

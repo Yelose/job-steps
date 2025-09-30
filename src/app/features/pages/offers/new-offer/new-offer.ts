@@ -23,10 +23,13 @@ import { JobOfferInterface } from '../../../../core/models/job-offer-interface';
 import { JobOfferStatus, JobOfferStatusModel } from '../../../../core/models/job-offer-status';
 import { JobScheduleModel, JobScheduleType } from '../../../../core/models/job-schedule-model';
 import { JobContractTypeModel, JobContractType } from '../../../../core/models/job-contract-type-model';
+import { TitleHeader } from '../../../../shared/components/title-header/title-header';
+import { PageWrapper } from '../../../../shared/wrappers/page-wrapper/page-wrapper';
 
 @Component({
   selector: 'app-new-offer',
   imports: [
+    TitleHeader, PageWrapper,
     ReactiveFormsModule, MatInputModule, MatFormFieldModule, MatIconModule, MatButtonModule,
     MatSelectModule, MatDatepickerModule, MatSlideToggleModule, MatCheckboxModule
   ],

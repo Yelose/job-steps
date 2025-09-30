@@ -1,185 +1,190 @@
-<h1>{{isEditMode() ? 'Editando oferta' : 'Nueva oferta de empleo'}}</h1>
-<form [formGroup]="offerForm()">
-  @if (showBasic()){
-  <section>
-    <header>
-      <h2>Datos básicos de la oferta</h2>
-    </header>
-    <main>
-      @if (formCfg().visible.title) {
-      <mat-form-field appearance="outline">
-        <mat-label>Título del puesto</mat-label>
-        <input matInput formControlName="title" />
-      </mat-form-field>
-      } @if (formCfg().visible.company) {
-      <mat-form-field appearance="outline">
-        <mat-label>Empresa</mat-label>
-        <input matInput formControlName="company" />
-      </mat-form-field>
-      } @if (formCfg().visible.location) {
-      <mat-form-field appearance="outline">
-        <mat-label>Ubicación</mat-label>
-        <input matInput formControlName="location" />
-      </mat-form-field>
-      } @if (formCfg().visible.offerUrl) {
-      <mat-form-field appearance="outline">
-        <mat-label>Enlace a la oferta</mat-label>
-        <input matInput formControlName="offerUrl" />
-      </mat-form-field>
-      } @if (formCfg().visible.companyUrl) {
-      <mat-form-field appearance="outline">
-        <mat-label>Enlace web de la empresa</mat-label>
-        <input matInput formControlName="companyUrl" />
-      </mat-form-field>
-      } @if (formCfg().visible.date) {
-      <mat-form-field appearance="outline">
-        <mat-label>Fecha</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="date" />
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      } @if (formCfg().visible.coverLetter) {
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Carta de presentación personalizada</mat-label>
-        <textarea matInput rows="4" formControlName="coverLetter"></textarea>
-      </mat-form-field>
-      } @if (formCfg().visible.submitted) {
-      <mat-slide-toggle formControlName="submitted">Enviada candidatura</mat-slide-toggle>
-      }
-    </main>
-  </section>
-  } @if(showInfo()){
-  <section>
-    <header>
-      <h2>Información de la oferta</h2>
-    </header>
-    <main>
-      @if (formCfg().visible.description) {
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Descripción</mat-label>
-        <textarea matInput rows="4" formControlName="description"></textarea>
-      </mat-form-field>
-      } @if (formCfg().visible.schedule) {
-      <mat-form-field appearance="outline">
-        <mat-label>Jornada</mat-label>
-        <mat-select formControlName="schedule">
-          @for (s of scheduleOptions; track s) {
-          <mat-option [value]="s">{{ s }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-      } @if (formCfg().visible.contractType) {
-      <mat-form-field appearance="outline">
-        <mat-label>Contrato</mat-label>
-        <mat-select formControlName="contractType">
-          @for (c of contractTypeOptions; track c) {
-          <mat-option [value]="c">{{ c }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-      } @if (formCfg().visible.status) {
-      <mat-form-field appearance="outline">
-        <mat-label>Estado</mat-label>
-        <mat-select formControlName="status">
-          @for (s of statusOptions; track s.value) {
-          <mat-option [value]="s.value">
-            <mat-icon class="icon-with-text" fontIcon="{{ s.icon }}"></mat-icon>
-            {{ s.label }}
-          </mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-      } @if (formCfg().visible.companySalary) {
-      <mat-form-field appearance="outline">
-        <mat-label>Salario ofrecido</mat-label>
-        <input matInput formControlName="companySalary" />
-      </mat-form-field>
-      } @if (formCfg().visible.desiredSalary) {
-      <mat-form-field appearance="outline">
-        <mat-label>Salario solicitado</mat-label>
-        <input matInput formControlName="desiredSalary" />
-      </mat-form-field>
-      }
-    </main>
-  </section>
-  }
+<app-title-header [title]="isEditMode() ? 'Editando oferta' : 'Nueva oferta de empleo'" />
 
-  <section class="stages">
-    <header>
-      <h2>Etapas del proceso de selección</h2>
-    </header>
-    <main>
-      <div>
+<app-page-wrapper>
+
+  <form [formGroup]="offerForm()">
+    @if (showBasic()){
+    <section>
+      <header>
+        <h2>Datos básicos de la oferta</h2>
+      </header>
+      <main>
+        @if (formCfg().visible.title) {
         <mat-form-field appearance="outline">
-          <mat-label>Nombre de la etapa</mat-label>
-          <input matInput formControlName="newStageName" (keydown.enter)="addStage()" />
+          <mat-label>Título del puesto</mat-label>
+          <input matInput formControlName="title" />
         </mat-form-field>
-
+        } @if (formCfg().visible.company) {
         <mat-form-field appearance="outline">
-          <mat-label>Fecha de la etapa (opcional)</mat-label>
-          <input matInput [matDatepicker]="newStageDatePicker" formControlName="newStageDate" />
-          <mat-datepicker-toggle matIconSuffix [for]="newStageDatePicker"></mat-datepicker-toggle>
-          <mat-datepicker #newStageDatePicker></mat-datepicker>
+          <mat-label>Empresa</mat-label>
+          <input matInput formControlName="company" />
         </mat-form-field>
+        } @if (formCfg().visible.location) {
+        <mat-form-field appearance="outline">
+          <mat-label>Ubicación</mat-label>
+          <input matInput formControlName="location" />
+        </mat-form-field>
+        } @if (formCfg().visible.offerUrl) {
+        <mat-form-field appearance="outline">
+          <mat-label>Enlace a la oferta</mat-label>
+          <input matInput formControlName="offerUrl" />
+        </mat-form-field>
+        } @if (formCfg().visible.companyUrl) {
+        <mat-form-field appearance="outline">
+          <mat-label>Enlace web de la empresa</mat-label>
+          <input matInput formControlName="companyUrl" />
+        </mat-form-field>
+        } @if (formCfg().visible.date) {
+        <mat-form-field appearance="outline">
+          <mat-label>Fecha</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="date" />
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        } @if (formCfg().visible.coverLetter) {
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Carta de presentación personalizada</mat-label>
+          <textarea matInput rows="4" formControlName="coverLetter"></textarea>
+        </mat-form-field>
+        } @if (formCfg().visible.submitted) {
+        <mat-slide-toggle formControlName="submitted">Enviada candidatura</mat-slide-toggle>
+        }
+      </main>
+    </section>
+    } @if(showInfo()){
+    <section>
+      <header>
+        <h2>Información de la oferta</h2>
+      </header>
+      <main>
+        @if (formCfg().visible.description) {
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Descripción</mat-label>
+          <textarea matInput rows="4" formControlName="description"></textarea>
+        </mat-form-field>
+        } @if (formCfg().visible.schedule) {
+        <mat-form-field appearance="outline">
+          <mat-label>Jornada</mat-label>
+          <mat-select formControlName="schedule">
+            @for (s of scheduleOptions; track s) {
+            <mat-option [value]="s">{{ s }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        } @if (formCfg().visible.contractType) {
+        <mat-form-field appearance="outline">
+          <mat-label>Contrato</mat-label>
+          <mat-select formControlName="contractType">
+            @for (c of contractTypeOptions; track c) {
+            <mat-option [value]="c">{{ c }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        } @if (formCfg().visible.status) {
+        <mat-form-field appearance="outline">
+          <mat-label>Estado</mat-label>
+          <mat-select formControlName="status">
+            @for (s of statusOptions; track s.value) {
+            <mat-option [value]="s.value">
+              <mat-icon class="icon-with-text" fontIcon="{{ s.icon }}"></mat-icon>
+              {{ s.label }}
+            </mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        } @if (formCfg().visible.companySalary) {
+        <mat-form-field appearance="outline">
+          <mat-label>Salario ofrecido</mat-label>
+          <input matInput formControlName="companySalary" />
+        </mat-form-field>
+        } @if (formCfg().visible.desiredSalary) {
+        <mat-form-field appearance="outline">
+          <mat-label>Salario solicitado</mat-label>
+          <input matInput formControlName="desiredSalary" />
+        </mat-form-field>
+        }
+      </main>
+    </section>
+    }
 
-        <button matButton="filled" type="button" [disabled]="!newStageNameText.trim().length" (click)="addStage()">
-          Añadir etapa
-        </button>
-      </div>
-
-      <ng-container formArrayName="selectionStages">
-        @for (stage of selectionStagesFA.controls; track stage; let i = $index)
-        {
-        <div [formGroupName]="i">
-          <mat-checkbox formControlName="completed">Etapa completada</mat-checkbox>
-          <span>{{ stage.value.name }}</span>
-
+    <section class="stages">
+      <header>
+        <h2>Etapas del proceso de selección</h2>
+      </header>
+      <main>
+        <div>
           <mat-form-field appearance="outline">
-            <mat-label>Fecha de la etapa</mat-label>
-            <input matInput [matDatepicker]="sharedPicker" formControlName="date" />
-            <mat-datepicker-toggle matIconSuffix [for]="sharedPicker"></mat-datepicker-toggle>
-            <mat-datepicker #sharedPicker></mat-datepicker>
+            <mat-label>Nombre de la etapa</mat-label>
+            <input matInput formControlName="newStageName" (keydown.enter)="addStage()" />
           </mat-form-field>
 
-          <button mat-icon-button type="button" (click)="removeStage(i)">
-            <mat-icon>delete</mat-icon>
+          <mat-form-field appearance="outline">
+            <mat-label>Fecha de la etapa (opcional)</mat-label>
+            <input matInput [matDatepicker]="newStageDatePicker" formControlName="newStageDate" />
+            <mat-datepicker-toggle matIconSuffix [for]="newStageDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #newStageDatePicker></mat-datepicker>
+          </mat-form-field>
+
+          <button matButton="filled" type="button" [disabled]="!newStageNameText.trim().length" (click)="addStage()">
+            Añadir etapa
           </button>
         </div>
+
+        <ng-container formArrayName="selectionStages">
+          @for (stage of selectionStagesFA.controls; track stage; let i = $index)
+          {
+          <div [formGroupName]="i">
+            <mat-checkbox formControlName="completed">Etapa completada</mat-checkbox>
+            <span>{{ stage.value.name }}</span>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Fecha de la etapa</mat-label>
+              <input matInput [matDatepicker]="sharedPicker" formControlName="date" />
+              <mat-datepicker-toggle matIconSuffix [for]="sharedPicker"></mat-datepicker-toggle>
+              <mat-datepicker #sharedPicker></mat-datepicker>
+            </mat-form-field>
+
+            <button mat-icon-button type="button" (click)="removeStage(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          }
+        </ng-container>
+      </main>
+    </section>
+    @if (showObjective()){
+
+    <section>
+      <header>
+        <h2>Objetivo personal con esta empresa</h2>
+      </header>
+      <main>
+        @if (formCfg().visible.personalObjective) {
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Reflexión personal sobre la empresa</mat-label>
+          <textarea matInput rows="5" formControlName="personalObjective"></textarea>
+        </mat-form-field>
         }
-      </ng-container>
-    </main>
-  </section>
-  @if (showObjective()){
+      </main>
+    </section>
+    }
 
-  <section>
-    <header>
-      <h2>Objetivo personal con esta empresa</h2>
-    </header>
-    <main>
-      @if (formCfg().visible.personalObjective) {
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Reflexión personal sobre la empresa</mat-label>
-        <textarea matInput rows="5" formControlName="personalObjective"></textarea>
-      </mat-form-field>
-      }
-    </main>
-  </section>
-  }
+    <section class="submit-container">
+      <header>
+        <h2>Enviar formulario</h2>
+      </header>
+      <main class="submit-buttons-container">
+        <button matButton="filled" type="button" (click)="submit()">
+          Guardar Oferta
+        </button>
+        <button matButton="elevated" type="button" (click)="backToOffers()">
+          Volver a ofertas
+        </button>
+        <button matButton="filled" type="button" class="delete" (click)="resetForm()">
+          Borrar formulario
+        </button>
+      </main>
+    </section>
+  </form>
 
-  <section class="submit-container">
-    <header>
-      <h2>Enviar formulario</h2>
-    </header>
-    <main class="submit-buttons-container">
-      <button matButton="filled" type="button" (click)="submit()">
-        Guardar Oferta
-      </button>
-      <button matButton="elevated" type="button" (click)="backToOffers()">
-        Volver a ofertas
-      </button>
-      <button matButton="filled" type="button" class="delete" (click)="resetForm()">
-        Borrar formulario
-      </button>
-    </main>
-  </section>
-</form>
+</app-page-wrapper>

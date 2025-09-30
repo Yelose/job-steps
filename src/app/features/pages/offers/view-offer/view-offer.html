@@ -1,169 +1,176 @@
 @if (offer()) {
-<section>
-    <header>
-        @if(offer()!.offerUrl){
-        <a [href]="offer()!.offerUrl" target="_blank">
-            <h1>
-                <mat-icon>work</mat-icon>
-                {{ offer()!.title }}
-            </h1>
-        </a>} @else {
-        <a>
-            <h1>
-                <mat-icon>work</mat-icon>
-                {{ offer()!.title }}
-            </h1>
-        </a>
-        }
+<app-title-header [title]="offer()!.title ? 'Oferta: ' + offer()!.title : 'Sin título' " />
 
-        @if(offer()!.companyUrl){
-        <a [href]="offer()!.companyUrl" target="_blank">
-            <h2>
-                <mat-icon>business</mat-icon>
-                {{offer()!.company}}
-            </h2>
-        </a>
-        } @else{
-        <a>
-            <h2>
-                <mat-icon>business</mat-icon>
-                {{offer()!.company}}
-            </h2>
-        </a>
-        }
-        <p>
-            @let d = offer()?.date;
-            @if (d) {
-            <span><mat-icon>event</mat-icon> {{ toShortDate(d) }}</span>
+<app-page-wrapper>
+
+    <section>
+        <header>
+            @if(offer()!.offerUrl){
+            <a [href]="offer()!.offerUrl" target="_blank">
+                <h1>
+                    <mat-icon>work</mat-icon>
+                    {{ offer()!.title }} enlace a oferta
+                </h1>
+            </a>} @else {
+            <a>
+                <h1>
+                    <mat-icon>work</mat-icon>
+                    {{ offer()!.title }}
+                </h1>
+            </a>
             }
-            <span>
-                <mat-icon>location_on</mat-icon>
-                @if (formattedLocation.href) {
-                <a [href]="formattedLocation.href" target="_blank" rel="noopener">
-                    {{ formattedLocation.label }}
-                </a>
-                } @else {
-                {{ formattedLocation.label || 'No especificada' }}
+
+            @if(offer()!.companyUrl){
+            <a [href]="offer()!.companyUrl" target="_blank">
+                <h2>
+                    <mat-icon>business</mat-icon>
+                    {{offer()!.company}} página web
+                </h2>
+            </a>
+            } @else{
+            <a>
+                <h2>
+                    <mat-icon>business</mat-icon>
+                    {{offer()!.company}}
+                </h2>
+            </a>
+            }
+            <p>
+                @let d = offer()?.date;
+                @if (d) {
+                <span><mat-icon>event</mat-icon> {{ toShortDate(d) }}</span>
                 }
-            </span>
-        </p>
-    </header>
-    <mat-divider></mat-divider>
-    <main>
-        <mat-chip-set aria-label="Dog selection">
-            @let status = getStatusModel(offer()?.status ?? 'pending');
-            @if (status) {
-
-            <mat-chip variant="outlined">
-                <mat-icon matChipAvatar>{{ status?.icon }}</mat-icon>
-                {{ status?.label }}
-            </mat-chip>
-            }
-
-            @if (offer()?.schedule){
-            <mat-chip>
-                <mat-icon matChipAvatar>schedule</mat-icon>
-                {{ offer()?.schedule }}
-            </mat-chip>
-            }
-
-            @if (offer()?.contractType) {
-            <mat-chip variant="outlined">
-                <mat-icon matChipAvatar>description</mat-icon>
-                {{ offer()?.contractType }}
-            </mat-chip>
-            }
-
-            @if (offer()?.companySalary) {
-            <mat-chip>
-                <mat-icon matChipAvatar>payments</mat-icon>
-                {{ offer()?.companySalary }}
-            </mat-chip>
-            }
-
-            @if (offer()?.desiredSalary) {
-            <mat-chip>
-                <mat-icon matChipAvatar>euro</mat-icon>
-                {{ offer()?.desiredSalary }}
-            </mat-chip>
-            }
-
-        </mat-chip-set>
-
+                <span>
+                    <mat-icon>location_on</mat-icon>
+                    @if (formattedLocation.href) {
+                    <a [href]="formattedLocation.href" target="_blank" rel="noopener">
+                        {{ formattedLocation.label }}
+                    </a>
+                    } @else {
+                    {{ formattedLocation.label || 'No especificada' }}
+                    }
+                </span>
+            </p>
+        </header>
         <mat-divider></mat-divider>
+        <main>
+            <mat-chip-set aria-label="Dog selection">
+                @let status = getStatusModel(offer()?.status ?? 'pending');
+                @if (status) {
 
-        @if ((offer()?.formattedCoverLetter ?? []).length) {
-        <mat-accordion>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title><mat-icon>email</mat-icon> Carta de presentación</mat-panel-title>
-                </mat-expansion-panel-header>
-                @for (line of offer()?.formattedCoverLetter; track $index) {
-                <p>{{ line }}</p>
+                <mat-chip variant="outlined">
+                    <mat-icon matChipAvatar>{{ status?.icon }}</mat-icon>
+                    {{ status?.label }}
+                </mat-chip>
                 }
-            </mat-expansion-panel>
-        </mat-accordion>
-        }
 
-        @if ((offer()?.formattedOfferDescription ?? []).length) {
-        <mat-accordion>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title><mat-icon>notes</mat-icon> Descripción de la oferta</mat-panel-title>
-                </mat-expansion-panel-header>
-                @for (line of offer()?.formattedOfferDescription; track $index) {
-                <p>{{ line }}</p>
+                @if (offer()?.schedule){
+                <mat-chip>
+                    <mat-icon matChipAvatar>schedule</mat-icon>
+                    {{ offer()?.schedule }}
+                </mat-chip>
                 }
-            </mat-expansion-panel>
-        </mat-accordion>
-        }
 
-        @if ((offer()?.formattedObjective ?? []).length) {
-        <mat-accordion>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title><mat-icon>psychology</mat-icon> Objetivo Personal</mat-panel-title>
-                </mat-expansion-panel-header>
-                @for (line of offer()?.formattedObjective; track $index) {
-                <p>{{ line }}</p>
+                @if (offer()?.contractType) {
+                <mat-chip variant="outlined">
+                    <mat-icon matChipAvatar>description</mat-icon>
+                    {{ offer()?.contractType }}
+                </mat-chip>
                 }
-            </mat-expansion-panel>
-        </mat-accordion>
-        }
-        <mat-divider></mat-divider>
 
-        @if ((offer()?.selectionStages ?? []).length) {
-        <mat-list>
-            <div mat-subheader><mat-icon>flag</mat-icon> Etapas del proceso de selección</div>
-            @for (stage of offer()!.selectionStages; track stage.name) {
-            <mat-list-item>
-                @if(stage.completed){
-                <mat-icon matListItemIcon class="success">check</mat-icon>
+                @if (offer()?.companySalary) {
+                <mat-chip>
+                    <mat-icon matChipAvatar>payments</mat-icon>
+                    {{ offer()?.companySalary }}
+                </mat-chip>
                 }
-                @if(!stage.completed){
-                <mat-icon matListItemIcon class="delete">close</mat-icon>
+
+                @if (offer()?.desiredSalary) {
+                <mat-chip>
+                    <mat-icon matChipAvatar>euro</mat-icon>
+                    {{ offer()?.desiredSalary }}
+                </mat-chip>
                 }
-                <div matListItemTitle>{{stage.name}}</div>
-                @if(stage.date){
-                <div matListItemLine>{{toShortDate(stage.date)}}</div>
-                }
-            </mat-list-item>
+
+            </mat-chip-set>
+
+            <mat-divider></mat-divider>
+
+            @if ((offer()?.formattedCoverLetter ?? []).length) {
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title><mat-icon>email</mat-icon> Carta de presentación</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    @for (line of offer()?.formattedCoverLetter; track $index) {
+                    <p>{{ line }}</p>
+                    }
+                </mat-expansion-panel>
+            </mat-accordion>
             }
-        </mat-list>
-        }
 
-        <mat-divider></mat-divider>
-        <div>
+            @if ((offer()?.formattedOfferDescription ?? []).length) {
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title><mat-icon>notes</mat-icon> Descripción de la oferta</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    @for (line of offer()?.formattedOfferDescription; track $index) {
+                    <p>{{ line }}</p>
+                    }
+                </mat-expansion-panel>
+            </mat-accordion>
+            }
 
-            <button matButton="tonal" [routerLink]="['/edit-offer', offer()?.id]">
-                <mat-icon>edit</mat-icon>
-                Editar oferta
-            </button>
-            <button matButton="outlined" routerLink="/offers">
-                <mat-icon>list</mat-icon>
-                Volver a ofertas
-            </button>
-        </div>
-    </main>
-</section>
+            @if ((offer()?.formattedObjective ?? []).length) {
+            <mat-accordion>
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title><mat-icon>psychology</mat-icon> Objetivo Personal</mat-panel-title>
+                    </mat-expansion-panel-header>
+                    @for (line of offer()?.formattedObjective; track $index) {
+                    <p>{{ line }}</p>
+                    }
+                </mat-expansion-panel>
+            </mat-accordion>
+            }
+            <mat-divider></mat-divider>
+
+            @if ((offer()?.selectionStages ?? []).length) {
+            <mat-list>
+                <div mat-subheader><mat-icon>flag</mat-icon> Etapas del proceso de selección</div>
+                @for (stage of offer()!.selectionStages; track stage.name) {
+                <mat-list-item>
+                    @if(stage.completed){
+                    <mat-icon matListItemIcon class="success">check</mat-icon>
+                    }
+                    @if(!stage.completed){
+                    <mat-icon matListItemIcon class="delete">close</mat-icon>
+                    }
+                    <div matListItemTitle>{{stage.name}}</div>
+                    @if(stage.date){
+                    <div matListItemLine>{{toShortDate(stage.date)}}</div>
+                    }
+                </mat-list-item>
+                }
+            </mat-list>
+            }
+
+            <mat-divider></mat-divider>
+            <div>
+
+                <button matButton="tonal" [routerLink]="['/edit-offer', offer()?.id]">
+                    <mat-icon>edit</mat-icon>
+                    Editar oferta
+                </button>
+                <button matButton="outlined" routerLink="/offers">
+                    <mat-icon>list</mat-icon>
+                    Volver a ofertas
+                </button>
+            </div>
+        </main>
+    </section>
+
+</app-page-wrapper>
+
 }

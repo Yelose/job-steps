@@ -1,15 +1,7 @@
-:host {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: start;
-    padding-top: 5dvh;
-}
-
 mat-card {
     width: fit-content;
     width: min(700px, 80%);
+    margin: 10vh auto;
 
     mat-card-header {
         padding: 15px 20px;

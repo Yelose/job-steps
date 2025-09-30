@@ -12,10 +12,13 @@ import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { LocationDisplay, LocationFormatService } from '../../../../shared/services/location-format-service';
+import { TitleHeader } from '../../../../shared/components/title-header/title-header';
+import { PageWrapper } from '../../../../shared/wrappers/page-wrapper/page-wrapper';
 
 @Component({
   selector: 'app-view-offer',
-  imports: [RouterLink, MatExpansionModule, MatChipsModule, MatCardModule, MatIconModule, MatDividerModule,
+  imports: [TitleHeader, PageWrapper,
+    RouterLink, MatExpansionModule, MatChipsModule, MatCardModule, MatIconModule, MatDividerModule,
     MatListModule, MatButtonModule
   ],
   templateUrl: './view-offer.html',

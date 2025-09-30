@@ -5,13 +5,23 @@ header {
     max-width: $container-width;
     margin: 0 auto;
     background-color: var(--mat-sys-tertiary-fixed);
-
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2vh;
+    padding: 3vh 3vw;
+    text-align: center;
+    width: 100%;
 
     h1 {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 3vh;
         color: var(--mat-on-sys-tertiary-fixed);
     }
+
+}
+
+mat-divider {
+    margin: 0 auto;
+    width: 100%;
+    max-width: $container-width;
 }

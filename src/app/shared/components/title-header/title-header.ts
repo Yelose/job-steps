@@ -7,13 +7,11 @@ import { MatDividerModule } from '@angular/material/divider';
   template: `
     <header>
       <h1>{{title}}</h1>
-      <h2>{{subtitle}}</h2>
-      <mat-divider></mat-divider>
     </header>
+    <mat-divider></mat-divider>
   `,
   styleUrl: './title-header.scss'
 })
 export class TitleHeader {
   @Input() title: string = "";
-  @Input() subtitle?: string = "";
 }

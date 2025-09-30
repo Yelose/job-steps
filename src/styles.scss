@@ -63,7 +63,7 @@ body {
 }
 
 .snackbar-success {
-  @include mat.snack-bar-overrides((container-color: rgb(33, 75, 14),
+  @include mat.snack-bar-overrides((container-color: var(--mat-sys-on-secondary-fixed-dim),
       button-color: var(--mat-sys-primary),
       supporting-text-color: var(--mat-sys-on-primary),
     ));

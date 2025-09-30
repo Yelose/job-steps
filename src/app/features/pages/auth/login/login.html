@@ -1,25 +1,30 @@
 <app-title-header title="Iniciar sesión" />
 
-<div>
-    <form [formGroup]="loginForm" (ngSubmit)="submit()">
-        <mat-form-field appearance="outline">
-            <mat-label>Correo electrónico</mat-label>
-            <input matInput placeholder="tu email" formControlName="email" type="email" />
-            @if (email?.errors?.['required']) {
-            <mat-error>Campo obligatorio</mat-error>
-            }
-            @if (email?.errors?.['email']) {
-            <mat-error>Formato de email incorrecto</mat-error>
-            }
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Contraseña</mat-label>
-            <input matInput placeholder="introduce tu contraseña" formControlName="password" type="password" />
-            @if (password?.errors?.['required']) {
-            <mat-error>Contraseña obligatoria</mat-error>
-            }
-        </mat-form-field>
-        <button matButton="filled" type="submit">Log in</button>
-        <span>No tengo cuenta, <a routerLink="/register">Registrarme</a></span>
-    </form>
-</div>
+<app-page-wrapper>
+
+    <section>
+
+        <form [formGroup]="loginForm" (ngSubmit)="submit()">
+            <mat-form-field appearance="outline">
+                <mat-label>Correo electrónico</mat-label>
+                <input matInput placeholder="tu email" formControlName="email" type="email" />
+                @if (email?.errors?.['required']) {
+                <mat-error>Campo obligatorio</mat-error>
+                }
+                @if (email?.errors?.['email']) {
+                <mat-error>Formato de email incorrecto</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Contraseña</mat-label>
+                <input matInput placeholder="introduce tu contraseña" formControlName="password" type="password" />
+                @if (password?.errors?.['required']) {
+                <mat-error>Contraseña obligatoria</mat-error>
+                }
+            </mat-form-field>
+            <button matButton="filled" type="submit">Log in</button>
+            <span>No tengo cuenta, <a routerLink="/register">Registrarme</a></span>
+        </form>
+    </section>
+
+</app-page-wrapper>

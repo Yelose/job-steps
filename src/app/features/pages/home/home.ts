@@ -6,9 +6,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth-service';
+import { TitleHeader } from '../../../shared/components/title-header/title-header';
+import { PageWrapper } from '../../../shared/wrappers/page-wrapper/page-wrapper';
 @Component({
   selector: 'app-home',
-  imports: [MatSidenavModule, MatListModule, MatButtonModule, MatCardModule, MatIconModule, RouterLink],
+  imports: [TitleHeader, PageWrapper, MatSidenavModule, MatListModule, MatButtonModule, MatCardModule, MatIconModule, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })

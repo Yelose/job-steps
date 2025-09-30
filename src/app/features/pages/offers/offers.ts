@@ -15,12 +15,15 @@ import {
 } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { myCustomTooltipDefaults } from '../../../shared/utils/tooltip-defualt-options';
+import { TitleHeader } from '../../../shared/components/title-header/title-header';
+import { PageWrapper } from '../../../shared/wrappers/page-wrapper/page-wrapper';
 
 
 @Component({
   selector: 'app-offers',
   providers: [{ provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: myCustomTooltipDefaults }],
-  imports: [CommonModule, RouterLink, MatTableModule, MatPaginatorModule, MatIconModule,
+  imports: [TitleHeader, PageWrapper,
+    CommonModule, RouterLink, MatTableModule, MatPaginatorModule, MatIconModule,
     MatButtonModule, MatTooltipModule, MatMenuModule],
   templateUrl: './offers.html',
   styleUrl: './offers.scss'
